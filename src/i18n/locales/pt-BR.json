@@ -307,5 +307,42 @@
       "current": "Patrimônio atual",
       "emptyState": "Sem dados neste período."
     }
+  },
+  "backup": {
+    "title": "Backup",
+    "connectionStatus": "Google Drive",
+    "connectedAs": "Conectado como {{email}}",
+    "connectButton": "Conectar com o Google",
+    "connectError": "Não foi possível conectar ao Google",
+    "notConfigured": "O login com o Google ainda não está configurado nesta versão do app.",
+    "autoBackupToggle": "Backup automático",
+    "backUpNowButton": "Fazer backup agora",
+    "successTitle": "Backup concluído",
+    "errorTitle": "Falha no backup",
+    "lastBackup": "Último backup",
+    "never": "Nunca",
+    "disconnectButton": "Desconectar conta do Google",
+    "disconnectConfirm": {
+      "title": "Desconectar conta do Google?",
+      "message": "Isso remove apenas a conexão neste aparelho. Os backups já salvos no Drive não são afetados.",
+      "confirm": "Desconectar"
+    },
+    "history": {
+      "title": "Histórico",
+      "emptyState": "Nenhum backup ainda.",
+      "errorTitle": "Erro no backup",
+      "trigger": {
+        "manual": "Manual",
+        "auto_foreground": "Automático (app aberto)",
+        "auto_background": "Automático (app fechado)"
+      }
+    },
+    "folderLocation": {
+      "title": "Local do backup no Drive",
+      "app_data_folder": "Pasta exclusiva do app",
+      "app_data_folderDescription": "Pensada para ficar oculta, mas escondê-la de verdade exigiria um acesso ao Drive mais amplo do que este app solicita — por enquanto ela se comporta como a pasta visível, só que com outro nome.",
+      "visible_folder": "Pasta visível",
+      "visible_folderDescription": "Uma pasta chamada \"Cofrinho\" na raiz do seu Drive."
+    }
   }
 }

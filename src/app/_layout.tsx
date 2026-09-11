@@ -1,25 +1,54 @@
 import '@/global.css';
 import '@/i18n';
 
-import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, Text, View, type AppStateStatus } from 'react-native';
 import { Stack } from 'expo-router';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 
 import { db } from '@/db/client';
 import migrations from '@/drizzle/migrations';
-import { useAccountsStore } from '@/store';
+import { useAccountsStore, useBackupStore } from '@/store';
+
+// see technical-specification.md §6.3/§7.6 — automatic backup fires on app
+// foreground AND background transitions (matching backup_log's two distinct
+// 'auto_foreground'/'auto_background' trigger values), each gated by
+// checkAutoBackup's own once-roughly-per-day throttle. AppState reports an
+// intermediate 'inactive' state on iOS between active/background, so the
+// check is "did we cross the active <-> not-active boundary", not "did
+// AppState fire at all".
+function useAutoBackupTrigger(enabled: boolean) {
+  const checkAutoBackup = useBackupStore((s) => s.checkAutoBackup);
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    const subscription = AppState.addEventListener('change', (nextState: AppStateStatus) => {
+      const wasActive = appState.current === 'active';
+      const isActive = nextState === 'active';
+      if (!wasActive && isActive) checkAutoBackup('auto_foreground');
+      else if (wasActive && !isActive) checkAutoBackup('auto_background');
+      appState.current = nextState;
+    });
+
+    return () => subscription.remove();
+  }, [enabled, checkAutoBackup]);
+}
 
 export default function RootLayout() {
   const { success: migrationsReady, error: migrationsError } = useMigrations(db, migrations);
   const accounts = useAccountsStore((s) => s.accounts);
   const fetchAccounts = useAccountsStore((s) => s.fetchAccounts);
+  const initializeBackup = useBackupStore((s) => s.initialize);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     if (!migrationsReady) return;
-    fetchAccounts().finally(() => setIsReady(true));
-  }, [migrationsReady, fetchAccounts]);
+    Promise.all([fetchAccounts(), initializeBackup()]).finally(() => setIsReady(true));
+  }, [migrationsReady, fetchAccounts, initializeBackup]);
+
+  useAutoBackupTrigger(isReady);
 
   if (migrationsError) {
     return (
@@ -54,6 +83,7 @@ export default function RootLayout() {
       <Stack.Screen name="account" />
       <Stack.Screen name="category" />
       <Stack.Screen name="transaction" />
+      <Stack.Screen name="settings" />
     </Stack>
   );
 }
