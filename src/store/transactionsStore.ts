@@ -16,8 +16,8 @@ import { create, type StoreApi, type UseBoundStore } from 'zustand';
 
 import type { AppDatabase } from '@/db/types';
 import { accountLoanDetails, accounts, categories, transactions, transfers } from '@/db/schema';
-import { applyLoanPayment } from '@/src/lib/calculations';
-import { calculateCreditCardPaymentAssigned } from '@/src/lib/creditCard';
+import { applyLoanPayment } from '@/lib/calculations';
+import { calculateCreditCardPaymentAssigned } from '@/lib/creditCard';
 import {
   buildRegularTransactionRecord,
   buildTransferLegs,
@@ -26,7 +26,7 @@ import {
   validateTransactionForm,
   type TransactionFormErrors,
   type TransactionType,
-} from '@/src/lib/transactions';
+} from '@/lib/transactions';
 
 import { upsertMonthBudget } from './monthBudgetStore';
 

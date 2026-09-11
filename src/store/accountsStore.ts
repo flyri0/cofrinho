@@ -17,7 +17,7 @@ import {
   isLoanAccountType,
   validateAccountForm,
   type AccountFormErrors,
-} from '@/src/lib/accounts';
+} from '@/lib/accounts';
 
 export type AccountRow = typeof accounts.$inferSelect;
 export type AccountLoanDetailsRow = typeof accountLoanDetails.$inferSelect;

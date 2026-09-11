@@ -6,7 +6,7 @@ import {
   categoryMonthBudgets,
   transactions,
 } from '@/db/schema';
-import { calculateReadyToAssign } from '@/src/lib/calculations';
+import { calculateReadyToAssign } from '@/lib/calculations';
 
 import { createBudgetStore } from '../budgetStore';
 import { createTestDatabase } from '../testDb';

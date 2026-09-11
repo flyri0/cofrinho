@@ -150,18 +150,16 @@ describe('accountsStore', () => {
 
   it('creates the "Credit Card Payments" system group and a linked "Payment — [Card]" category for a new credit card', async () => {
     const store = createAccountsStore(db);
-    const created = await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Nubank',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
-      );
+    const created = await store.getState().createAccount(
+      {
+        name: 'Nubank',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+    );
     if (!created.ok) throw new Error('expected creation to succeed');
 
     const [group] = await db
@@ -187,30 +185,26 @@ describe('accountsStore', () => {
 
   it('reuses the same system group for a second credit card instead of duplicating it', async () => {
     const store = createAccountsStore(db);
-    await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Nubank',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
-      );
-    await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Inter',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
-      );
+    await store.getState().createAccount(
+      {
+        name: 'Nubank',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+    );
+    await store.getState().createAccount(
+      {
+        name: 'Inter',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
+    );
 
     const groups = await db
       .select()
@@ -250,18 +244,16 @@ describe('accountsStore', () => {
 
   it('archives the payment category (and the now-empty system group) when its credit card is archived', async () => {
     const store = createAccountsStore(db);
-    const created = await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Nubank',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
-      );
+    const created = await store.getState().createAccount(
+      {
+        name: 'Nubank',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+    );
     if (!created.ok) throw new Error('expected creation to succeed');
 
     await store.getState().archiveAccount(created.id);
@@ -281,30 +273,26 @@ describe('accountsStore', () => {
 
   it('keeps the system group active when another credit card still has an active payment category', async () => {
     const store = createAccountsStore(db);
-    const cardA = await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Nubank',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
-      );
-    const cardB = await store
-      .getState()
-      .createAccount(
-        {
-          name: 'Inter',
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
-      );
+    const cardA = await store.getState().createAccount(
+      {
+        name: 'Nubank',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+    );
+    const cardB = await store.getState().createAccount(
+      {
+        name: 'Inter',
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
+    );
     if (!cardA.ok || !cardB.ok) throw new Error('expected both cards to be created');
 
     await store.getState().archiveAccount(cardA.id);

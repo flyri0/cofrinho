@@ -3,9 +3,9 @@ import { create, type StoreApi, type UseBoundStore } from 'zustand';
 
 import type { AppDatabase } from '@/db/types';
 import { categories, categoryMonthBudgets, transactions } from '@/db/schema';
-import { calculateCoverTransferAmount, type CategoryNumbers } from '@/src/lib/categories';
-import { calculateCategoryAvailable } from '@/src/lib/calculations';
-import { getCurrentMonth, shiftMonth } from '@/src/lib/month';
+import { calculateCoverTransferAmount, type CategoryNumbers } from '@/lib/categories';
+import { calculateCategoryAvailable } from '@/lib/calculations';
+import { getCurrentMonth, shiftMonth } from '@/lib/month';
 
 export interface CategoryHistoryEntry {
   month: string;

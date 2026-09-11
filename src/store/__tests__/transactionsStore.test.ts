@@ -49,18 +49,16 @@ describe('transactionsStore', () => {
   }
 
   async function createCreditCardAccount(name: string) {
-    const result = await accountsStore
-      .getState()
-      .createAccount(
-        {
-          name,
-          type: 'credit_card',
-          balanceCents: 0,
-          interestRateAnnualInput: '',
-          monthlyPaymentCents: 0,
-        },
-        { groupName: 'Credit Card Payments', categoryName: `Payment — ${name}` },
-      );
+    const result = await accountsStore.getState().createAccount(
+      {
+        name,
+        type: 'credit_card',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      },
+      { groupName: 'Credit Card Payments', categoryName: `Payment — ${name}` },
+    );
     if (!result.ok) throw new Error('expected credit card creation to succeed');
     return result.id;
   }

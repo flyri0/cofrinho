@@ -12,7 +12,7 @@ import type { AppDatabase } from '@/db/types';
 // database, so store tests exercise the same schema the real app runs.
 export function createTestDatabase(): AppDatabase {
   const sqlite = new Database(':memory:');
-  const drizzleDir = path.join(__dirname, '../../drizzle');
+  const drizzleDir = path.join(__dirname, '../drizzle');
   const migrationFiles = fs
     .readdirSync(drizzleDir)
     .filter((file) => file.endsWith('.sql'))

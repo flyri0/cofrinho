@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { TransactionType } from '@/src/lib/transactions';
+import type { TransactionType } from '@/lib/transactions';
 
 export interface TransactionFormDraft {
   type: TransactionType;

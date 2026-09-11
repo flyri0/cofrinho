@@ -3,7 +3,7 @@ import { create, type StoreApi, type UseBoundStore } from 'zustand';
 
 import type { AppDatabase } from '@/db/types';
 import { accounts, categoryMonthBudgets, transactions } from '@/db/schema';
-import { calculateReadyToAssign } from '@/src/lib/calculations';
+import { calculateReadyToAssign } from '@/lib/calculations';
 
 export interface BudgetState {
   readyToAssign: number;

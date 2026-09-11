@@ -15,7 +15,7 @@ import {
   type BuiltSuggestedCategoryGroup,
   type CategoryFormErrors,
   type GroupFormErrors,
-} from '@/src/lib/categories';
+} from '@/lib/categories';
 
 export type CategoryGroupRow = typeof categoryGroups.$inferSelect;
 export type CategoryRow = typeof categories.$inferSelect;
