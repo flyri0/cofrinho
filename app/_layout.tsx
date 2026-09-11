@@ -37,14 +37,20 @@ export default function RootLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* `onboarding` stays mounted even after the first account is created —
-          step 3 (suggested categories) runs right after account creation,
-          while hasAccounts is already true. It's just never the initial
-          route once (tabs) is available, since (tabs) claims "/" directly. */}
-      <Stack.Screen name="onboarding" />
+      {/* On a cold app launch there's no deep link, so React Navigation has no
+          URL to resolve and falls back to the first screen registered with the
+          navigator as the initial route. `(tabs)` must be declared first so
+          that fallback lands on it whenever accounts already exist — otherwise
+          the unconditionally-mounted `onboarding` screen below would always
+          win that fallback and onboarding would show on every launch,
+          regardless of hasAccounts. */}
       <Stack.Protected guard={hasAccounts}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
+      {/* `onboarding` stays mounted even after the first account is created —
+          step 3 (suggested categories) runs right after account creation,
+          while hasAccounts is already true. */}
+      <Stack.Screen name="onboarding" />
       <Stack.Screen name="account" />
       <Stack.Screen name="category" />
       <Stack.Screen name="transaction" />
