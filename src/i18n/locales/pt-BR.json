@@ -336,13 +336,6 @@
         "auto_foreground": "Automático (app aberto)",
         "auto_background": "Automático (app fechado)"
       }
-    },
-    "folderLocation": {
-      "title": "Local do backup no Drive",
-      "app_data_folder": "Pasta exclusiva do app",
-      "app_data_folderDescription": "Pensada para ficar oculta, mas escondê-la de verdade exigiria um acesso ao Drive mais amplo do que este app solicita — por enquanto ela se comporta como a pasta visível, só que com outro nome.",
-      "visible_folder": "Pasta visível",
-      "visible_folderDescription": "Uma pasta chamada \"Cofrinho\" na raiz do seu Drive."
     }
   }
 }

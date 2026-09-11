@@ -20,14 +20,21 @@ export const GOOGLE_DISCOVERY: AuthSession.DiscoveryDocument = {
   revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
 };
 
-// Requires a Google Cloud OAuth 2.0 Client ID, of the "Web application" type
-// (NOT "Android"/"iOS" — those use Google's own fixed reverse-domain redirect
-// convention and can't register this app's custom-scheme redirect URI). Set up:
+// Requires a Google Cloud OAuth 2.0 Client ID of the "Desktop app" type. Set up:
 //   1. In Google Cloud Console, enable the Google Drive API for your project.
-//   2. Create an OAuth 2.0 Client ID of type "Web application".
-//   3. Add this app's redirect URI (see makeRedirectUri below — on a custom
-//      dev client it's `cofrinho://`) to its "Authorized redirect URIs".
-//   4. Put the client ID in a (gitignored) .env file as
+//   2. Create an OAuth 2.0 Client ID of type "Desktop app".
+//      - NOT "Web application": that type validates redirect URIs and
+//        REJECTS a custom scheme like `cofrinho://` with "Invalid redirect:
+//        must contain a domain" ("Redirecionamento inválido: é preciso haver
+//        um domínio") — Web clients only accept http(s) URLs with a real
+//        domain. "Desktop app" is Google's client type for installed/native
+//        apps (see https://developers.google.com/identity/protocols/oauth2/native-app):
+//        it has no client secret, doesn't ask for or validate a redirect URI
+//        in the Console at all, and accepts a private-use URI scheme
+//        redirect (like `cofrinho://`) at request time.
+//      - NOT "Android"/"iOS" either — those use Google's own fixed
+//        reverse-domain redirect convention instead of this app's own scheme.
+//   3. Put the client ID in a (gitignored) .env file as
 //      EXPO_PUBLIC_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
 // This external setup can't be automated or verified from here — sign-in
 // should be tested manually on a real device once configured.

@@ -336,13 +336,6 @@
         "auto_foreground": "Automatic (app opened)",
         "auto_background": "Automatic (app closed)"
       }
-    },
-    "folderLocation": {
-      "title": "Backup location on Drive",
-      "app_data_folder": "App-only folder",
-      "app_data_folderDescription": "Meant to be hidden, but truly hiding it would require broader Drive access than this app requests — so right now it behaves like the visible folder, just under a different name.",
-      "visible_folder": "Visible folder",
-      "visible_folderDescription": "A folder named \"Cofrinho\" at the root of your Drive."
     }
   }
 }

@@ -131,9 +131,6 @@ export const transfers = sqliteTable('transfers', {
 export const THEME_MODES = ['light', 'dark', 'system'] as const;
 export type ThemeMode = (typeof THEME_MODES)[number];
 
-export const DRIVE_FOLDER_MODES = ['app_data_folder', 'visible_folder'] as const;
-export type DriveFolderMode = (typeof DRIVE_FOLDER_MODES)[number];
-
 // Singleton table — a single row, fixed id = 1 (enforced by the check constraint below)
 export const appSettings = sqliteTable(
   'app_settings',
@@ -149,7 +146,6 @@ export const appSettings = sqliteTable(
     locale: text('locale').notNull().default('pt-BR'),
     autoBackupEnabled: integer('auto_backup_enabled', { mode: 'boolean' }).notNull(),
     lastBackupAt: integer('last_backup_at', { mode: 'timestamp_ms' }),
-    driveFolderMode: text('drive_folder_mode').$type<DriveFolderMode>().notNull(),
   },
   (table) => [check('app_settings_singleton', sql`${table.id} = 1`)],
 );

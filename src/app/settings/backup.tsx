@@ -1,20 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  Modal,
-  Pressable,
-  ScrollView,
-  Switch,
-  Text,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, Switch, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 
-import { DRIVE_FOLDER_MODES, type DriveFolderMode } from '@/db/schema';
 import { formatDateTime } from '@/lib/backup';
 import { buildAuthRequestConfig, exchangeAuthCode, GOOGLE_DISCOVERY } from '@/lib/googleDrive';
 import { useBackupStore } from '@/store';
@@ -28,17 +18,14 @@ export default function BackupSettingsScreen() {
   const isConnected = useBackupStore((s) => s.isConnected);
   const connectedEmail = useBackupStore((s) => s.connectedEmail);
   const autoBackupEnabled = useBackupStore((s) => s.autoBackupEnabled);
-  const driveFolderMode = useBackupStore((s) => s.driveFolderMode);
   const lastBackupAt = useBackupStore((s) => s.lastBackupAt);
   const isBackingUp = useBackupStore((s) => s.isBackingUp);
   const initialize = useBackupStore((s) => s.initialize);
   const setAutoBackupEnabled = useBackupStore((s) => s.setAutoBackupEnabled);
-  const setDriveFolderMode = useBackupStore((s) => s.setDriveFolderMode);
   const onConnected = useBackupStore((s) => s.onConnected);
   const disconnect = useBackupStore((s) => s.disconnect);
   const runBackup = useBackupStore((s) => s.runBackup);
 
-  const [isFolderPickerVisible, setIsFolderPickerVisible] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const clientIdConfigured = Boolean(process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID);
@@ -158,58 +145,11 @@ export default function BackupSettingsScreen() {
         <Text className="text-base text-gray-900">{t('backup.history.title')}</Text>
       </Pressable>
 
-      <Pressable
-        onPress={() => setIsFolderPickerVisible(true)}
-        className="border-b border-gray-200 px-4 py-4"
-      >
-        <Text className="text-base text-gray-900">{t('backup.folderLocation.title')}</Text>
-        <Text className="mt-1 text-sm text-gray-500">
-          {t(`backup.folderLocation.${driveFolderMode}`)}
-        </Text>
-      </Pressable>
-
       {isConnected && (
         <Pressable onPress={confirmDisconnect} className="px-4 py-4">
           <Text className="text-base font-medium text-red-600">{t('backup.disconnectButton')}</Text>
         </Pressable>
       )}
-
-      <Modal
-        visible={isFolderPickerVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setIsFolderPickerVisible(false)}
-      >
-        <Pressable
-          className="flex-1 justify-end bg-black/40"
-          onPress={() => setIsFolderPickerVisible(false)}
-        >
-          <Pressable className="rounded-t-2xl bg-white p-4" onPress={(e) => e.stopPropagation()}>
-            <Text className="mb-3 text-center text-base font-semibold text-gray-900">
-              {t('backup.folderLocation.title')}
-            </Text>
-            {DRIVE_FOLDER_MODES.map((mode: DriveFolderMode) => (
-              <Pressable
-                key={mode}
-                onPress={() => {
-                  setDriveFolderMode(mode);
-                  setIsFolderPickerVisible(false);
-                }}
-                className="gap-1 py-3"
-              >
-                <Text
-                  className={`text-base ${driveFolderMode === mode ? 'font-semibold text-blue-600' : 'text-gray-900'}`}
-                >
-                  {t(`backup.folderLocation.${mode}`)}
-                </Text>
-                <Text className="text-xs text-gray-500">
-                  {t(`backup.folderLocation.${mode}Description`)}
-                </Text>
-              </Pressable>
-            ))}
-          </Pressable>
-        </Pressable>
-      </Modal>
     </ScrollView>
   );
 }

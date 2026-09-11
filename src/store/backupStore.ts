@@ -14,9 +14,8 @@ import {
   transfers,
   type BackupStatus,
   type BackupTrigger,
-  type DriveFolderMode,
 } from '@/db/schema';
-import { buildBackupExport, resolveDriveFolderName, shouldRunAutoBackup } from '@/lib/backup';
+import { buildBackupExport, shouldRunAutoBackup } from '@/lib/backup';
 import {
   disconnectGoogleDrive,
   ensureBackupFolder,
@@ -29,6 +28,12 @@ import {
 
 export type BackupLogRow = typeof backupLog.$inferSelect;
 
+// see technical-specification.md §6.3 — a single, visible folder at the root
+// of the user's Drive. There is no hidden-folder option: Google's real hidden
+// Application Data folder needs the `drive.appdata` scope, which this app
+// deliberately never requests (CLAUDE.md's drive.file-only rule).
+const BACKUP_FOLDER_NAME = 'Cofrinho';
+
 export interface BackupRunResult {
   ok: boolean;
   errorMessage: string | null;
@@ -39,14 +44,12 @@ export interface BackupState {
   isConnected: boolean;
   connectedEmail: string | null;
   autoBackupEnabled: boolean;
-  driveFolderMode: DriveFolderMode;
   lastBackupAt: Date | null;
   history: BackupLogRow[];
   isBackingUp: boolean;
   error: string | null;
   initialize: () => Promise<void>;
   setAutoBackupEnabled: (enabled: boolean) => Promise<void>;
-  setDriveFolderMode: (mode: DriveFolderMode) => Promise<void>;
   fetchHistory: () => Promise<void>;
   /** Called after a successful OAuth code exchange (src/lib/googleDrive/auth.ts's exchangeAuthCode). */
   onConnected: () => Promise<void>;
@@ -64,9 +67,7 @@ function toErrorMessage(error: unknown): string {
 // currency/locale belong to a future Appearance/Preferences milestone, §6.1/
 // §6.4). autoBackupEnabled defaults to false: there's nothing to back up to
 // until the user connects an account, so defaulting it "on" before that would
-// be presumptuous. driveFolderMode defaults to 'visible_folder' since that's
-// the one mode that behaves exactly as its name promises under drive.file
-// scope (see lib/backup/driveFolderName.ts for the 'app_data_folder' caveat).
+// be presumptuous.
 async function ensureAppSettingsRow(db: AppDatabase): Promise<typeof appSettings.$inferSelect> {
   const [existing] = await db.select().from(appSettings).where(eq(appSettings.id, 1)).limit(1);
   if (existing) return existing;
@@ -78,7 +79,6 @@ async function ensureAppSettingsRow(db: AppDatabase): Promise<typeof appSettings
       themeMode: 'system',
       colorThemeId: 'ocean',
       autoBackupEnabled: false,
-      driveFolderMode: 'visible_folder',
     })
     .returning();
   return inserted;
@@ -133,7 +133,6 @@ export function createBackupStore(db: AppDatabase): UseBoundStore<StoreApi<Backu
     isConnected: false,
     connectedEmail: null,
     autoBackupEnabled: false,
-    driveFolderMode: 'visible_folder',
     lastBackupAt: null,
     history: [],
     isBackingUp: false,
@@ -149,7 +148,6 @@ export function createBackupStore(db: AppDatabase): UseBoundStore<StoreApi<Backu
           isConnected: accessToken !== null,
           connectedEmail: accessToken !== null ? email : null,
           autoBackupEnabled: settings.autoBackupEnabled,
-          driveFolderMode: settings.driveFolderMode,
           lastBackupAt: settings.lastBackupAt,
         });
         await get().fetchHistory();
@@ -161,11 +159,6 @@ export function createBackupStore(db: AppDatabase): UseBoundStore<StoreApi<Backu
     setAutoBackupEnabled: async (enabled) => {
       await db.update(appSettings).set({ autoBackupEnabled: enabled }).where(eq(appSettings.id, 1));
       set({ autoBackupEnabled: enabled });
-    },
-
-    setDriveFolderMode: async (mode) => {
-      await db.update(appSettings).set({ driveFolderMode: mode }).where(eq(appSettings.id, 1));
-      set({ driveFolderMode: mode });
     },
 
     fetchHistory: async () => {
@@ -202,8 +195,7 @@ export function createBackupStore(db: AppDatabase): UseBoundStore<StoreApi<Backu
         const tables = await fetchAllTables(db);
         const now = new Date();
         const exportData = buildBackupExport(tables, now);
-        const folderName = resolveDriveFolderName(get().driveFolderMode);
-        const folderId = await ensureBackupFolder(accessToken, folderName);
+        const folderId = await ensureBackupFolder(accessToken, BACKUP_FOLDER_NAME);
         const filename = `cofrinho-backup-${now.toISOString().replace(/[:.]/g, '-')}.json`;
 
         await uploadBackupFile(accessToken, folderId, filename, JSON.stringify(exportData));

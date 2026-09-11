@@ -221,7 +221,6 @@ Singleton table (a single row, fixed id = 1).
 | locale | TEXT | default `pt-BR`, drives the active `i18next` language — see 6.4 |
 | auto_backup_enabled | BOOLEAN | |
 | last_backup_at | DATETIME, nullable | |
-| drive_folder_mode | TEXT | `app_data_folder` or `visible_folder` |
 
 ### 4.11 `backup_log`
 
@@ -376,7 +375,7 @@ The Settings root screen is a simple list of sections; each section below, where
 - "Back up now" button (loading state during upload, with success/error feedback).
 - "Last backup: [date/time]" or "Never" if `last_backup_at` is null.
 - **"History"** sub-item: opens a simple list from the `backup_log` table, showing date, status (success/error icon), and trigger (manual/automatic). Tapping an item with an error shows `error_message`.
-- **"Backup location on Drive"** sub-item: toggles between a hidden folder (`app_data_folder`) and a visible folder in the root of the user's Drive (`visible_folder`).
+- Backups are stored in a single, visible folder named "Cofrinho" at the root of the user's Drive (no hidden-folder option — that would need the `drive.appdata` scope, which this app deliberately never requests; see CLAUDE.md).
 - Secondary "Disconnect Google account" button (revokes the local token, doesn't affect files already saved on Drive).
 
 ### 6.4 Preferences (sub-screen)

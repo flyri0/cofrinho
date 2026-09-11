@@ -50,7 +50,6 @@ describe('backupStore', () => {
       const [row] = await db.select().from(appSettings).where(eq(appSettings.id, 1));
       expect(row).toMatchObject({
         autoBackupEnabled: false,
-        driveFolderMode: 'visible_folder',
         lastBackupAt: null,
       });
       expect(backupStore.getState()).toMatchObject({
@@ -58,7 +57,6 @@ describe('backupStore', () => {
         isConnected: false,
         connectedEmail: null,
         autoBackupEnabled: false,
-        driveFolderMode: 'visible_folder',
         lastBackupAt: null,
       });
     });
@@ -95,15 +93,6 @@ describe('backupStore', () => {
       expect(row.autoBackupEnabled).toBe(true);
       expect(backupStore.getState().autoBackupEnabled).toBe(true);
     });
-
-    it('persists the drive folder mode', async () => {
-      await backupStore.getState().initialize();
-      await backupStore.getState().setDriveFolderMode('app_data_folder');
-
-      const [row] = await db.select().from(appSettings).where(eq(appSettings.id, 1));
-      expect(row.driveFolderMode).toBe('app_data_folder');
-      expect(backupStore.getState().driveFolderMode).toBe('app_data_folder');
-    });
   });
 
   describe('onConnected / disconnect', () => {
@@ -133,7 +122,7 @@ describe('backupStore', () => {
   });
 
   describe('runBackup', () => {
-    it('uploads to the folder matching the current driveFolderMode and records a success entry', async () => {
+    it('uploads to the Cofrinho folder and records a success entry', async () => {
       await backupStore.getState().initialize();
       mockGoogleDrive.getValidAccessToken.mockResolvedValue('token-123');
       mockGoogleDrive.ensureBackupFolder.mockResolvedValue('folder-id-1');
@@ -158,20 +147,6 @@ describe('backupStore', () => {
         trigger: 'manual',
         errorMessage: null,
       });
-    });
-
-    it('uses the app_data_folder name when that mode is selected', async () => {
-      await backupStore.getState().initialize();
-      await backupStore.getState().setDriveFolderMode('app_data_folder');
-      mockGoogleDrive.getValidAccessToken.mockResolvedValue('token-123');
-      mockGoogleDrive.ensureBackupFolder.mockResolvedValue('folder-id-2');
-
-      await backupStore.getState().runBackup('manual');
-
-      expect(mockGoogleDrive.ensureBackupFolder).toHaveBeenCalledWith(
-        'token-123',
-        'Cofrinho (app data)',
-      );
     });
 
     it('records a failed entry and does not advance lastBackupAt when not connected', async () => {
