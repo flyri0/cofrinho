@@ -14,7 +14,12 @@ export default function OnboardingWelcomeScreen() {
         {t('onboarding.welcome.description')}
       </Text>
       <Pressable
-        onPress={() => router.push({ pathname: '/account/new', params: { redirectTo: '/' } })}
+        onPress={() =>
+          router.push({
+            pathname: '/account/new',
+            params: { redirectTo: '/onboarding/categories' },
+          })
+        }
         className="mt-4 items-center rounded-lg bg-blue-600 px-6 py-3"
       >
         <Text className="text-base font-semibold text-white">{t('onboarding.welcome.cta')}</Text>

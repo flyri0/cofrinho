@@ -16,15 +16,13 @@ describe('accountsStore', () => {
   it('creates a normal cash account and reflects it in the fetched list', async () => {
     const store = createAccountsStore(db);
 
-    const result = await store
-      .getState()
-      .createAccount({
-        name: 'Checking',
-        type: 'checking',
-        balanceCents: 50_000,
-        interestRateAnnualInput: '',
-        monthlyPaymentCents: 0,
-      });
+    const result = await store.getState().createAccount({
+      name: 'Checking',
+      type: 'checking',
+      balanceCents: 50_000,
+      interestRateAnnualInput: '',
+      monthlyPaymentCents: 0,
+    });
 
     expect(result.ok).toBe(true);
     expect(store.getState().accounts).toHaveLength(1);
@@ -48,15 +46,13 @@ describe('accountsStore', () => {
   it('rejects account creation with validation errors instead of writing to the db', async () => {
     const store = createAccountsStore(db);
 
-    const result = await store
-      .getState()
-      .createAccount({
-        name: '  ',
-        type: 'checking',
-        balanceCents: 0,
-        interestRateAnnualInput: '',
-        monthlyPaymentCents: 0,
-      });
+    const result = await store.getState().createAccount({
+      name: '  ',
+      type: 'checking',
+      balanceCents: 0,
+      interestRateAnnualInput: '',
+      monthlyPaymentCents: 0,
+    });
 
     expect(result).toEqual({ ok: false, errors: { name: 'required' } });
     expect(store.getState().accounts).toHaveLength(0);

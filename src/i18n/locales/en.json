@@ -96,6 +96,104 @@
       "title": "Welcome to Cofrinho",
       "description": "Every real that comes in is assigned to a category before it's spent — so you always know where it's going.",
       "cta": "Create my first account"
+    },
+    "categories": {
+      "title": "Choose your categories",
+      "description": "We picked some common categories to get you started. Uncheck anything that doesn't fit — you can add more later.",
+      "cta": "Continue"
     }
+  },
+  "home": {
+    "readyToAssign": {
+      "label": "Ready to Assign"
+    }
+  },
+  "budget": {
+    "manageCategories": "Manage categories",
+    "available": "Available",
+    "overspentAlert": "You've spent more than you assigned to this category.",
+    "coverShortcut": "Cover with leftover from another category",
+    "emptyState": {
+      "title": "No categories yet",
+      "message": "Create groups and categories to start budgeting.",
+      "cta": "Manage categories"
+    },
+    "quickAssign": {
+      "title": "Assign amount",
+      "zeroOut": "Zero out",
+      "fillTarget": "Fill target"
+    },
+    "coverModal": {
+      "title": "Cover with leftover from which category?",
+      "empty": "No category has leftover available right now.",
+      "cover": "Cover"
+    }
+  },
+  "categoryDetail": {
+    "groupLabel": "Group",
+    "targetLabel": "Target",
+    "targetPlaceholder": "No target set",
+    "history": {
+      "title": "History",
+      "assigned": "Assigned",
+      "activity": "Activity",
+      "available": "Available"
+    },
+    "options": {
+      "rename": "Rename",
+      "changeIcon": "Change icon",
+      "moveGroup": "Move to another group",
+      "archive": "Archive"
+    },
+    "archiveBlocked": {
+      "title": "Can't archive",
+      "message": "This category still has an amount assigned this month. Zero it out before archiving."
+    },
+    "archiveConfirm": {
+      "title": "Archive category?",
+      "confirm": "Archive"
+    },
+    "moveGroupTitle": "Move to which group?"
+  },
+  "categoryManage": {
+    "title": "Categories and groups",
+    "newGroup": "New group",
+    "newGroupPlaceholder": "Group name",
+    "newCategoryPlaceholder": "New category",
+    "emptyGroup": "No categories in this group yet.",
+    "archiveGroupBlocked": {
+      "title": "Can't archive",
+      "message": "Archive every category in this group first."
+    },
+    "archiveGroupConfirm": {
+      "title": "Archive group?",
+      "confirm": "Archive"
+    }
+  },
+  "categoryFormErrors": {
+    "nameRequired": "Enter a name.",
+    "groupRequired": "Select a group."
+  },
+  "suggestedCategoryGroups": {
+    "fixedBills": "Fixed Bills",
+    "needs": "Needs",
+    "lifestyle": "Lifestyle",
+    "goals": "Goals"
+  },
+  "suggestedCategoryNames": {
+    "rent": "Rent/Mortgage",
+    "electricity": "Electricity",
+    "water": "Water",
+    "internet": "Internet",
+    "phone": "Phone",
+    "groceries": "Groceries",
+    "transportation": "Transportation",
+    "health": "Health",
+    "diningOut": "Dining Out",
+    "entertainment": "Entertainment",
+    "subscriptions": "Subscriptions",
+    "shopping": "Shopping",
+    "emergencyFund": "Emergency Fund",
+    "vacation": "Vacation"
   }
 }

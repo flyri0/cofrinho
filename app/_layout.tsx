@@ -37,13 +37,16 @@ export default function RootLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      {/* `onboarding` stays mounted even after the first account is created —
+          step 3 (suggested categories) runs right after account creation,
+          while hasAccounts is already true. It's just never the initial
+          route once (tabs) is available, since (tabs) claims "/" directly. */}
+      <Stack.Screen name="onboarding" />
       <Stack.Protected guard={hasAccounts}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
-      <Stack.Protected guard={!hasAccounts}>
-        <Stack.Screen name="onboarding" />
-      </Stack.Protected>
       <Stack.Screen name="account" />
+      <Stack.Screen name="category" />
     </Stack>
   );
 }

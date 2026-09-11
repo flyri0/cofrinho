@@ -96,6 +96,104 @@
       "title": "Bem-vindo ao Cofrinho",
       "description": "Todo dinheiro que entra é atribuído a uma categoria antes de ser gasto — assim você sempre sabe para onde ele vai.",
       "cta": "Criar minha primeira conta"
+    },
+    "categories": {
+      "title": "Escolha suas categorias",
+      "description": "Selecionamos algumas categorias comuns para você começar. Desmarque o que não fizer sentido — dá para adicionar mais depois.",
+      "cta": "Continuar"
     }
+  },
+  "home": {
+    "readyToAssign": {
+      "label": "Pronto para atribuir"
+    }
+  },
+  "budget": {
+    "manageCategories": "Gerenciar categorias",
+    "available": "Disponível",
+    "overspentAlert": "Você gastou mais do que atribuiu nesta categoria.",
+    "coverShortcut": "Cobrir com sobra de outra categoria",
+    "emptyState": {
+      "title": "Nenhuma categoria ainda",
+      "message": "Crie grupos e categorias para começar a orçar.",
+      "cta": "Gerenciar categorias"
+    },
+    "quickAssign": {
+      "title": "Atribuir valor",
+      "zeroOut": "Zerar",
+      "fillTarget": "Preencher meta"
+    },
+    "coverModal": {
+      "title": "Cobrir com a sobra de qual categoria?",
+      "empty": "Nenhuma categoria com sobra disponível no momento.",
+      "cover": "Cobrir"
+    }
+  },
+  "categoryDetail": {
+    "groupLabel": "Grupo",
+    "targetLabel": "Meta",
+    "targetPlaceholder": "Sem meta definida",
+    "history": {
+      "title": "Histórico",
+      "assigned": "Atribuído",
+      "activity": "Atividade",
+      "available": "Disponível"
+    },
+    "options": {
+      "rename": "Renomear",
+      "changeIcon": "Alterar ícone",
+      "moveGroup": "Mover para outro grupo",
+      "archive": "Arquivar"
+    },
+    "archiveBlocked": {
+      "title": "Não é possível arquivar",
+      "message": "Esta categoria ainda tem um valor atribuído neste mês. Zere o valor atribuído antes de arquivar."
+    },
+    "archiveConfirm": {
+      "title": "Arquivar categoria?",
+      "confirm": "Arquivar"
+    },
+    "moveGroupTitle": "Mover para qual grupo?"
+  },
+  "categoryManage": {
+    "title": "Categorias e grupos",
+    "newGroup": "Novo grupo",
+    "newGroupPlaceholder": "Nome do grupo",
+    "newCategoryPlaceholder": "Nova categoria",
+    "emptyGroup": "Nenhuma categoria neste grupo ainda.",
+    "archiveGroupBlocked": {
+      "title": "Não é possível arquivar",
+      "message": "Arquive todas as categorias deste grupo primeiro."
+    },
+    "archiveGroupConfirm": {
+      "title": "Arquivar grupo?",
+      "confirm": "Arquivar"
+    }
+  },
+  "categoryFormErrors": {
+    "nameRequired": "Informe um nome.",
+    "groupRequired": "Selecione um grupo."
+  },
+  "suggestedCategoryGroups": {
+    "fixedBills": "Contas Fixas",
+    "needs": "Necessidades",
+    "lifestyle": "Estilo de Vida",
+    "goals": "Metas"
+  },
+  "suggestedCategoryNames": {
+    "rent": "Aluguel/Financiamento",
+    "electricity": "Energia",
+    "water": "Água",
+    "internet": "Internet",
+    "phone": "Celular",
+    "groceries": "Mercado",
+    "transportation": "Transporte",
+    "health": "Saúde",
+    "diningOut": "Restaurantes",
+    "entertainment": "Lazer",
+    "subscriptions": "Assinaturas",
+    "shopping": "Compras",
+    "emergencyFund": "Reserva de Emergência",
+    "vacation": "Férias"
   }
 }
