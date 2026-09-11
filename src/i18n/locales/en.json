@@ -1,0 +1,12 @@
+{
+  "app": {
+    "name": "Cofrinho"
+  },
+  "tabs": {
+    "home": "Home",
+    "budget": "Budget",
+    "transactions": "Transactions",
+    "accounts": "Accounts",
+    "reports": "Reports"
+  }
+}
