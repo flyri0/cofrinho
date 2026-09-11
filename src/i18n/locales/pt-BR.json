@@ -8,5 +8,94 @@
     "transactions": "Transações",
     "accounts": "Contas",
     "reports": "Relatórios"
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "archive": "Arquivar"
+  },
+  "accountGroups": {
+    "cash": {
+      "title": "Dinheiro",
+      "description": "Contas do dia a dia, como conta corrente, poupança ou carteira."
+    },
+    "credit": {
+      "title": "Crédito",
+      "description": "Cartões de crédito e linhas de crédito — o saldo pode ficar negativo."
+    },
+    "loan": {
+      "title": "Empréstimos e Financiamentos",
+      "description": "Dívidas com parcelas fixas, como financiamentos e empréstimos pessoais."
+    },
+    "tracking": {
+      "title": "Acompanhamento",
+      "description": "Investimentos e outros bens ou dívidas que você só quer acompanhar, sem afetar o orçamento."
+    }
+  },
+  "accountTypes": {
+    "checking": "Conta corrente",
+    "savings": "Poupança",
+    "cash": "Carteira",
+    "credit_card": "Cartão de crédito",
+    "line_of_credit": "Linha de crédito",
+    "mortgage": "Financiamento imobiliário",
+    "auto_loan": "Financiamento de veículo",
+    "student_loan": "Financiamento estudantil",
+    "personal_loan": "Empréstimo pessoal",
+    "medical_debt": "Dívida médica",
+    "other_debt": "Outra dívida",
+    "asset": "Bem ou investimento",
+    "liability": "Outro passivo"
+  },
+  "accounts": {
+    "title": "Contas",
+    "addAccount": "Adicionar conta",
+    "subtotal": "Subtotal",
+    "emptyState": {
+      "title": "Nenhuma conta ainda",
+      "message": "Crie sua primeira conta para começar a orçar.",
+      "cta": "Criar conta"
+    },
+    "options": {
+      "edit": "Editar",
+      "archive": "Arquivar",
+      "viewLedger": "Ver extrato"
+    },
+    "archiveConfirm": {
+      "title": "Arquivar conta?",
+      "message": "Esta conta ainda tem saldo diferente de zero. Arquivar mesmo assim?",
+      "confirm": "Arquivar"
+    }
+  },
+  "accountForm": {
+    "newTitle": "Nova conta",
+    "editTitle": "Editar conta",
+    "nameLabel": "Nome",
+    "namePlaceholder": "ex.: Conta corrente",
+    "typeLabel": "Tipo",
+    "selectType": "Selecionar tipo",
+    "balanceLabel": "Saldo atual",
+    "balanceReadOnlyHint": "O saldo é calculado a partir das transações e não pode ser editado.",
+    "interestRateLabel": "Taxa de juros anual (%)",
+    "monthlyPaymentLabel": "Parcela mensal",
+    "save": "Salvar",
+    "errors": {
+      "nameRequired": "Informe um nome para a conta.",
+      "typeRequired": "Selecione um tipo de conta.",
+      "interestRateInvalidNumber": "Informe uma taxa de juros válida.",
+      "interestRateMustBePositive": "A taxa de juros não pode ser negativa.",
+      "monthlyPaymentMustBePositive": "Informe um valor de parcela maior que zero."
+    }
+  },
+  "accountTypePicker": {
+    "title": "Tipo de conta"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bem-vindo ao Cofrinho",
+      "description": "Todo dinheiro que entra é atribuído a uma categoria antes de ser gasto — assim você sempre sabe para onde ele vai.",
+      "cta": "Criar minha primeira conta"
+    }
   }
 }

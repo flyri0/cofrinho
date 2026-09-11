@@ -8,5 +8,94 @@
     "transactions": "Transactions",
     "accounts": "Accounts",
     "reports": "Reports"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "archive": "Archive"
+  },
+  "accountGroups": {
+    "cash": {
+      "title": "Cash",
+      "description": "Everyday accounts, like checking, savings, or a wallet."
+    },
+    "credit": {
+      "title": "Credit",
+      "description": "Credit cards and lines of credit — the balance can go negative."
+    },
+    "loan": {
+      "title": "Loans and Financing",
+      "description": "Debts with a fixed installment, like a mortgage or a personal loan."
+    },
+    "tracking": {
+      "title": "Tracking",
+      "description": "Investments and other assets or debts you just want to track, without affecting your budget."
+    }
+  },
+  "accountTypes": {
+    "checking": "Checking",
+    "savings": "Savings",
+    "cash": "Cash",
+    "credit_card": "Credit card",
+    "line_of_credit": "Line of credit",
+    "mortgage": "Mortgage",
+    "auto_loan": "Auto loan",
+    "student_loan": "Student loan",
+    "personal_loan": "Personal loan",
+    "medical_debt": "Medical debt",
+    "other_debt": "Other debt",
+    "asset": "Asset or investment",
+    "liability": "Other liability"
+  },
+  "accounts": {
+    "title": "Accounts",
+    "addAccount": "Add account",
+    "subtotal": "Subtotal",
+    "emptyState": {
+      "title": "No accounts yet",
+      "message": "Create your first account to start budgeting.",
+      "cta": "Create account"
+    },
+    "options": {
+      "edit": "Edit",
+      "archive": "Archive",
+      "viewLedger": "View ledger"
+    },
+    "archiveConfirm": {
+      "title": "Archive account?",
+      "message": "This account still has a non-zero balance. Archive it anyway?",
+      "confirm": "Archive"
+    }
+  },
+  "accountForm": {
+    "newTitle": "New account",
+    "editTitle": "Edit account",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Checking",
+    "typeLabel": "Type",
+    "selectType": "Select type",
+    "balanceLabel": "Current balance",
+    "balanceReadOnlyHint": "The balance is calculated from transactions and can't be edited.",
+    "interestRateLabel": "Annual interest rate (%)",
+    "monthlyPaymentLabel": "Monthly payment",
+    "save": "Save",
+    "errors": {
+      "nameRequired": "Enter a name for the account.",
+      "typeRequired": "Select an account type.",
+      "interestRateInvalidNumber": "Enter a valid interest rate.",
+      "interestRateMustBePositive": "The interest rate can't be negative.",
+      "monthlyPaymentMustBePositive": "Enter a payment amount greater than zero."
+    }
+  },
+  "accountTypePicker": {
+    "title": "Account type"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to Cofrinho",
+      "description": "Every real that comes in is assigned to a category before it's spent — so you always know where it's going.",
+      "cta": "Create my first account"
+    }
   }
 }
