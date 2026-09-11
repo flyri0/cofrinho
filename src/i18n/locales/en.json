@@ -195,5 +195,90 @@
     "shopping": "Shopping",
     "emergencyFund": "Emergency Fund",
     "vacation": "Vacation"
+  },
+  "creditCard": {
+    "systemGroupName": "Credit Card Payments",
+    "paymentCategoryName": "Payment — {{cardName}}"
+  },
+  "transactionTypes": {
+    "outflow": "Outflow",
+    "inflow": "Inflow",
+    "transfer": "Transfer",
+    "credit_card_payment": "Credit Card Payment"
+  },
+  "transactionForm": {
+    "newTitle": "New transaction",
+    "editTitle": "Edit transaction",
+    "typeLabel": "Type",
+    "amountLabel": "Amount",
+    "accountLabel": "Account",
+    "fromAccountLabel": "From account",
+    "toAccountLabel": "To account",
+    "categoryLabel": "Category",
+    "categoryIncomePlaceholder": "No category (Income)",
+    "selectAccount": "Select account",
+    "selectCategory": "Select category",
+    "payeeLabel": "Payee",
+    "payeePlaceholder": "e.g. Groceries",
+    "dateLabel": "Date",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "memoLabel": "Memo",
+    "flagLabel": "Flag",
+    "clearedLabel": "Cleared",
+    "save": "Save",
+    "delete": "Delete",
+    "deleteConfirm": {
+      "title": "Delete transaction?",
+      "confirm": "Delete"
+    },
+    "errors": {
+      "accountRequired": "Select an account.",
+      "toAccountRequired": "Select the destination account.",
+      "toAccountSameAccount": "The destination account must be different from the source.",
+      "categoryRequired": "Select a category.",
+      "amountMustBePositive": "Enter an amount greater than zero.",
+      "dateRequired": "Enter a date."
+    }
+  },
+  "categoryPicker": {
+    "title": "Choose category",
+    "searchPlaceholder": "Search categories",
+    "incomeOption": "Income (no category)"
+  },
+  "accountPicker": {
+    "title": "Choose account"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "addTransaction": "New transaction",
+    "searchPlaceholder": "Search by payee or memo",
+    "transferLabel": "Transfer",
+    "emptyState": {
+      "title": "No transactions yet",
+      "message": "Log your first transaction to get started."
+    },
+    "filters": {
+      "title": "Filters",
+      "account": "Account",
+      "category": "Category",
+      "status": "Status",
+      "statusAll": "All",
+      "statusCleared": "Cleared",
+      "statusUncleared": "Uncleared",
+      "clear": "Clear filters",
+      "apply": "Apply"
+    },
+    "options": {
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "markCleared": "Mark as cleared",
+      "markUncleared": "Mark as uncleared"
+    },
+    "deleteConfirm": {
+      "title": "Delete transaction?",
+      "confirm": "Delete"
+    }
   }
 }

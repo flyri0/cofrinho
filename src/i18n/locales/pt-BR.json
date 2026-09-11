@@ -195,5 +195,90 @@
     "shopping": "Compras",
     "emergencyFund": "Reserva de Emergência",
     "vacation": "Férias"
+  },
+  "creditCard": {
+    "systemGroupName": "Pagamentos de Cartão de Crédito",
+    "paymentCategoryName": "Pagamento — {{cardName}}"
+  },
+  "transactionTypes": {
+    "outflow": "Saída",
+    "inflow": "Entrada",
+    "transfer": "Transferência",
+    "credit_card_payment": "Pagamento de cartão"
+  },
+  "transactionForm": {
+    "newTitle": "Nova transação",
+    "editTitle": "Editar transação",
+    "typeLabel": "Tipo",
+    "amountLabel": "Valor",
+    "accountLabel": "Conta",
+    "fromAccountLabel": "Conta de origem",
+    "toAccountLabel": "Conta de destino",
+    "categoryLabel": "Categoria",
+    "categoryIncomePlaceholder": "Sem categoria (Renda)",
+    "selectAccount": "Selecionar conta",
+    "selectCategory": "Selecionar categoria",
+    "payeeLabel": "Favorecido",
+    "payeePlaceholder": "ex.: Mercado",
+    "dateLabel": "Data",
+    "showMore": "Mostrar mais",
+    "showLess": "Mostrar menos",
+    "memoLabel": "Observação",
+    "flagLabel": "Marcador",
+    "clearedLabel": "Compensada",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "deleteConfirm": {
+      "title": "Excluir transação?",
+      "confirm": "Excluir"
+    },
+    "errors": {
+      "accountRequired": "Selecione uma conta.",
+      "toAccountRequired": "Selecione a conta de destino.",
+      "toAccountSameAccount": "A conta de destino deve ser diferente da de origem.",
+      "categoryRequired": "Selecione uma categoria.",
+      "amountMustBePositive": "Informe um valor maior que zero.",
+      "dateRequired": "Informe uma data."
+    }
+  },
+  "categoryPicker": {
+    "title": "Escolher categoria",
+    "searchPlaceholder": "Buscar categoria",
+    "incomeOption": "Renda (sem categoria)"
+  },
+  "accountPicker": {
+    "title": "Escolher conta"
+  },
+  "transactions": {
+    "title": "Transações",
+    "addTransaction": "Nova transação",
+    "searchPlaceholder": "Buscar por favorecido ou observação",
+    "transferLabel": "Transferência",
+    "emptyState": {
+      "title": "Nenhuma transação ainda",
+      "message": "Registre sua primeira transação para começar."
+    },
+    "filters": {
+      "title": "Filtros",
+      "account": "Conta",
+      "category": "Categoria",
+      "status": "Status",
+      "statusAll": "Todas",
+      "statusCleared": "Compensadas",
+      "statusUncleared": "Não compensadas",
+      "clear": "Limpar filtros",
+      "apply": "Aplicar"
+    },
+    "options": {
+      "edit": "Editar",
+      "duplicate": "Duplicar",
+      "delete": "Excluir",
+      "markCleared": "Marcar como compensada",
+      "markUncleared": "Marcar como não compensada"
+    },
+    "deleteConfirm": {
+      "title": "Excluir transação?",
+      "confirm": "Excluir"
+    }
   }
 }

@@ -47,6 +47,7 @@ export default function RootLayout() {
       </Stack.Protected>
       <Stack.Screen name="account" />
       <Stack.Screen name="category" />
+      <Stack.Screen name="transaction" />
     </Stack>
   );
 }

@@ -88,7 +88,8 @@ async function fetchAssignedBeforeMonth(
   return new Map(rows.map((row) => [row.categoryId, Number(row.total)]));
 }
 
-async function upsertMonthBudget(
+// Exported for reuse by transactionsStore.ts's credit-card-payment-category recompute.
+export async function upsertMonthBudget(
   db: AppDatabase,
   categoryId: number,
   month: string,

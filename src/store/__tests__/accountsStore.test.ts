@@ -1,7 +1,7 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import type { AppDatabase } from '@/db/types';
-import { accountLoanDetails, accounts } from '@/db/schema';
+import { accountLoanDetails, accounts, categories, categoryGroups } from '@/db/schema';
 
 import { createAccountsStore } from '../accountsStore';
 import { createTestDatabase } from '../testDb';
@@ -146,5 +146,175 @@ describe('accountsStore', () => {
     expect(store.getState().accounts).toHaveLength(0);
     const [row] = await db.select().from(accounts).where(eq(accounts.id, created.id));
     expect(row.archived).toBe(true);
+  });
+
+  it('creates the "Credit Card Payments" system group and a linked "Payment — [Card]" category for a new credit card', async () => {
+    const store = createAccountsStore(db);
+    const created = await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Nubank',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+      );
+    if (!created.ok) throw new Error('expected creation to succeed');
+
+    const [group] = await db
+      .select()
+      .from(categoryGroups)
+      .where(
+        and(eq(categoryGroups.isSystem, true), eq(categoryGroups.name, 'Credit Card Payments')),
+      );
+    expect(group).toBeDefined();
+    expect(group.archived).toBe(false);
+
+    const [category] = await db
+      .select()
+      .from(categories)
+      .where(eq(categories.linkedAccountId, created.id));
+    expect(category).toMatchObject({
+      name: 'Payment — Nubank',
+      isSystem: true,
+      groupId: group.id,
+      archived: false,
+    });
+  });
+
+  it('reuses the same system group for a second credit card instead of duplicating it', async () => {
+    const store = createAccountsStore(db);
+    await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Nubank',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+      );
+    await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Inter',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
+      );
+
+    const groups = await db
+      .select()
+      .from(categoryGroups)
+      .where(
+        and(eq(categoryGroups.isSystem, true), eq(categoryGroups.name, 'Credit Card Payments')),
+      );
+    expect(groups).toHaveLength(1);
+
+    const paymentCategories = await db
+      .select()
+      .from(categories)
+      .where(eq(categories.groupId, groups[0].id));
+    expect(paymentCategories.map((c) => c.name).sort()).toEqual([
+      'Payment — Inter',
+      'Payment — Nubank',
+    ]);
+  });
+
+  it('does not create a system category for a line_of_credit account (scoped to credit_card only)', async () => {
+    const store = createAccountsStore(db);
+    const created = await store.getState().createAccount({
+      name: 'Overdraft',
+      type: 'line_of_credit',
+      balanceCents: 0,
+      interestRateAnnualInput: '',
+      monthlyPaymentCents: 0,
+    });
+    if (!created.ok) throw new Error('expected creation to succeed');
+
+    const linked = await db
+      .select()
+      .from(categories)
+      .where(eq(categories.linkedAccountId, created.id));
+    expect(linked).toHaveLength(0);
+  });
+
+  it('archives the payment category (and the now-empty system group) when its credit card is archived', async () => {
+    const store = createAccountsStore(db);
+    const created = await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Nubank',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+      );
+    if (!created.ok) throw new Error('expected creation to succeed');
+
+    await store.getState().archiveAccount(created.id);
+
+    const [category] = await db
+      .select()
+      .from(categories)
+      .where(eq(categories.linkedAccountId, created.id));
+    expect(category.archived).toBe(true);
+
+    const [group] = await db
+      .select()
+      .from(categoryGroups)
+      .where(eq(categoryGroups.id, category.groupId));
+    expect(group.archived).toBe(true); // it was the only card, so the shared group is now empty too
+  });
+
+  it('keeps the system group active when another credit card still has an active payment category', async () => {
+    const store = createAccountsStore(db);
+    const cardA = await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Nubank',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Nubank' },
+      );
+    const cardB = await store
+      .getState()
+      .createAccount(
+        {
+          name: 'Inter',
+          type: 'credit_card',
+          balanceCents: 0,
+          interestRateAnnualInput: '',
+          monthlyPaymentCents: 0,
+        },
+        { groupName: 'Credit Card Payments', categoryName: 'Payment — Inter' },
+      );
+    if (!cardA.ok || !cardB.ok) throw new Error('expected both cards to be created');
+
+    await store.getState().archiveAccount(cardA.id);
+
+    const [groupRow] = await db
+      .select()
+      .from(categoryGroups)
+      .where(
+        and(eq(categoryGroups.isSystem, true), eq(categoryGroups.name, 'Credit Card Payments')),
+      );
+    expect(groupRow.archived).toBe(false); // card B's payment category is still active
   });
 });
