@@ -280,5 +280,32 @@
       "title": "Delete transaction?",
       "confirm": "Delete"
     }
+  },
+  "reports": {
+    "tabs": {
+      "spendingBreakdown": "Spending",
+      "incomeVsSpending": "Income vs. Spending",
+      "netWorth": "Net Worth"
+    },
+    "period": {
+      "thisMonth": "This month",
+      "last3": "Last 3 months",
+      "last6": "Last 6 months",
+      "last12": "Last 12 months",
+      "custom": "Custom",
+      "customRangeSeparator": "to"
+    },
+    "spendingBreakdown": {
+      "emptyState": "No spending in this period."
+    },
+    "incomeVsSpending": {
+      "income": "Income",
+      "spending": "Spending",
+      "emptyState": "No data in this period."
+    },
+    "netWorth": {
+      "current": "Current net worth",
+      "emptyState": "No data in this period."
+    }
   }
 }

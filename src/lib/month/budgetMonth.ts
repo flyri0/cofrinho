@@ -27,3 +27,11 @@ export function formatMonthLabel(month: string, locale: string): string {
   const label = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date);
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
+
+// Short axis label for charts with many months (e.g. "mai", "Jan") — full
+// formatMonthLabel would overflow a 12-bar chart.
+export function formatMonthShort(month: string, locale: string): string {
+  const [year, monthNum] = month.split('-').map(Number);
+  const date = new Date(year, monthNum - 1, 1);
+  return new Intl.DateTimeFormat(locale, { month: 'short' }).format(date);
+}

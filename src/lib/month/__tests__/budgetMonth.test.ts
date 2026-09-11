@@ -1,4 +1,10 @@
-import { formatMonth, formatMonthLabel, getCurrentMonth, shiftMonth } from '../budgetMonth';
+import {
+  formatMonth,
+  formatMonthLabel,
+  formatMonthShort,
+  getCurrentMonth,
+  shiftMonth,
+} from '../budgetMonth';
 
 describe('formatMonth / getCurrentMonth', () => {
   it('zero-pads the month', () => {
@@ -48,5 +54,17 @@ describe('formatMonthLabel', () => {
 
   it('formats an en label', () => {
     expect(formatMonthLabel('2026-05', 'en')).toBe('May 2026');
+  });
+});
+
+describe('formatMonthShort', () => {
+  it('formats an en short label', () => {
+    expect(formatMonthShort('2026-05', 'en')).toBe('May');
+  });
+
+  it('formats a pt-BR short label', () => {
+    expect(formatMonthShort('2026-05', 'pt-BR')).toBe(
+      new Intl.DateTimeFormat('pt-BR', { month: 'short' }).format(new Date(2026, 4, 1)),
+    );
   });
 });

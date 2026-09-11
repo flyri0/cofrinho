@@ -280,5 +280,32 @@
       "title": "Excluir transação?",
       "confirm": "Excluir"
     }
+  },
+  "reports": {
+    "tabs": {
+      "spendingBreakdown": "Gastos",
+      "incomeVsSpending": "Receitas x Gastos",
+      "netWorth": "Patrimônio"
+    },
+    "period": {
+      "thisMonth": "Este mês",
+      "last3": "Últimos 3 meses",
+      "last6": "Últimos 6 meses",
+      "last12": "Últimos 12 meses",
+      "custom": "Personalizado",
+      "customRangeSeparator": "até"
+    },
+    "spendingBreakdown": {
+      "emptyState": "Nenhum gasto neste período."
+    },
+    "incomeVsSpending": {
+      "income": "Receitas",
+      "spending": "Gastos",
+      "emptyState": "Sem dados neste período."
+    },
+    "netWorth": {
+      "current": "Patrimônio atual",
+      "emptyState": "Sem dados neste período."
+    }
   }
 }
