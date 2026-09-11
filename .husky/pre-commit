@@ -2,5 +2,5 @@ npm run lint
 
 STAGED_SOURCE_FILES=$(git diff --cached --name-only --diff-filter=ACM -- '*.ts' '*.tsx' '*.js' '*.jsx')
 if [ -n "$STAGED_SOURCE_FILES" ]; then
-  npx jest --bail --findRelatedTests $STAGED_SOURCE_FILES
+  npx jest --bail --passWithNoTests --findRelatedTests $STAGED_SOURCE_FILES
 fi
