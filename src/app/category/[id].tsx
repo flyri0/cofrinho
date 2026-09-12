@@ -95,14 +95,20 @@ export default function CategoryDetailScreen() {
       <Stack.Screen options={{ title: category.name }} />
       <View className="gap-3 border-b border-gray-200 dark:border-gray-800 p-4">
         <View className="flex-row items-center gap-3">
-          <Pressable
-            onPress={() => setIsEmojiPickerVisible(true)}
-            className="h-12 w-12 items-center justify-center rounded-lg bg-surface"
-          >
-            <Text className="text-2xl">{category.icon ?? '❓'}</Text>
-          </Pressable>
+          {category.isSystem ? (
+            <View className="h-12 w-12 items-center justify-center rounded-lg bg-surface">
+              <Text className="text-2xl">{category.icon ?? '❓'}</Text>
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => setIsEmojiPickerVisible(true)}
+              className="h-12 w-12 items-center justify-center rounded-lg bg-surface"
+            >
+              <Text className="text-2xl">{category.icon ?? '❓'}</Text>
+            </Pressable>
+          )}
 
-          {isEditingName ? (
+          {!category.isSystem && isEditingName ? (
             <TextInput
               autoFocus
               value={nameDraft}
@@ -111,6 +117,10 @@ export default function CategoryDetailScreen() {
               onSubmitEditing={saveName}
               className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-lg"
             />
+          ) : category.isSystem ? (
+            <Text className="flex-1 text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {category.name}
+            </Text>
           ) : (
             <Pressable
               className="flex-1"
@@ -126,11 +136,17 @@ export default function CategoryDetailScreen() {
           )}
         </View>
 
-        <Pressable onPress={() => setIsGroupPickerVisible(true)}>
+        {category.isSystem ? (
           <Text className="text-sm text-gray-500 dark:text-gray-300">
             {t('categoryDetail.groupLabel')}: {group?.name ?? '—'}
           </Text>
-        </Pressable>
+        ) : (
+          <Pressable onPress={() => setIsGroupPickerVisible(true)}>
+            <Text className="text-sm text-gray-500 dark:text-gray-300">
+              {t('categoryDetail.groupLabel')}: {group?.name ?? '—'}
+            </Text>
+          </Pressable>
+        )}
 
         <View className="gap-1.5">
           <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -143,11 +159,16 @@ export default function CategoryDetailScreen() {
           />
         </View>
 
-        <Pressable onPress={handleArchive} className="self-start">
-          <Text className="text-sm font-medium text-error">
-            {t('categoryDetail.options.archive')}
-          </Text>
-        </Pressable>
+        {/* see technical-specification.md §5.4 — "System categories... have
+            this menu disabled or hidden — they can't be manually renamed/
+            archived, only through the linked account's lifecycle." */}
+        {!category.isSystem && (
+          <Pressable onPress={handleArchive} className="self-start">
+            <Text className="text-sm font-medium text-error">
+              {t('categoryDetail.options.archive')}
+            </Text>
+          </Pressable>
+        )}
       </View>
 
       <View className="p-4">
