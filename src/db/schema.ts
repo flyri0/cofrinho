@@ -127,9 +127,23 @@ export const transfers = sqliteTable('transfers', {
   memo: text('memo'),
 });
 
-// see technical-specification.md §4.10
+// see technical-specification.md §4.10 and §6.1 — the pre-built color theme
+// catalog itself (each theme's actual colors) lives in src/lib/theme, which
+// imports this type; keeping the id list here (like THEME_MODES) is what
+// lets that catalog grow without a schema change, per §6.1's "structured to
+// grow" requirement.
 export const THEME_MODES = ['light', 'dark', 'system'] as const;
 export type ThemeMode = (typeof THEME_MODES)[number];
+
+export const COLOR_THEME_IDS = ['ocean', 'sunset', 'forest'] as const;
+export type ColorThemeId = (typeof COLOR_THEME_IDS)[number];
+
+// see technical-specification.md §6.4
+export const CURRENCY_SYMBOL_POSITIONS = ['before', 'after'] as const;
+export type CurrencySymbolPosition = (typeof CURRENCY_SYMBOL_POSITIONS)[number];
+
+export const DECIMAL_SEPARATORS = [',', '.'] as const;
+export type DecimalSeparator = (typeof DECIMAL_SEPARATORS)[number];
 
 // Singleton table — a single row, fixed id = 1 (enforced by the check constraint below)
 export const appSettings = sqliteTable(
@@ -140,8 +154,13 @@ export const appSettings = sqliteTable(
       .notNull()
       .default(false),
     themeMode: text('theme_mode').$type<ThemeMode>().notNull(),
-    colorThemeId: text('color_theme_id').notNull(),
+    colorThemeId: text('color_theme_id').$type<ColorThemeId>().notNull(),
     currencySymbol: text('currency_symbol').notNull().default('R$'),
+    currencySymbolPosition: text('currency_symbol_position')
+      .$type<CurrencySymbolPosition>()
+      .notNull()
+      .default('before'),
+    decimalSeparator: text('decimal_separator').$type<DecimalSeparator>().notNull().default(','),
     firstDayOfMonth: integer('first_day_of_month').notNull().default(1),
     locale: text('locale').notNull().default('pt-BR'),
     autoBackupEnabled: integer('auto_backup_enabled', { mode: 'boolean' }).notNull(),

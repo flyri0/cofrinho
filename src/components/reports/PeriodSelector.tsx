@@ -56,16 +56,16 @@ export function PeriodSelector({
   }
 
   return (
-    <View className="gap-2 border-b border-gray-200 p-3">
+    <View className="gap-2 border-b border-gray-200 dark:border-gray-800 p-3">
       <View className="flex-row flex-wrap gap-2">
         {REPORT_PERIOD_PRESETS.map((option) => (
           <Pressable
             key={option}
             onPress={() => onPresetChange(option)}
-            className={`rounded-full px-3 py-1.5 ${preset === option ? 'bg-blue-600' : 'bg-gray-100'}`}
+            className={`rounded-full px-3 py-1.5 ${preset === option ? 'bg-accent' : 'bg-surface'}`}
           >
             <Text
-              className={`text-sm font-medium ${preset === option ? 'text-white' : 'text-gray-700'}`}
+              className={`text-sm font-medium ${preset === option ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}
             >
               {t(`reports.period.${option}`)}
             </Text>
@@ -79,14 +79,16 @@ export function PeriodSelector({
             value={startDraft}
             onChangeText={commitStart}
             placeholder="YYYY-MM"
-            className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900"
+            className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
           />
-          <Text className="text-sm text-gray-400">{t('reports.period.customRangeSeparator')}</Text>
+          <Text className="text-sm text-gray-400 dark:text-gray-300">
+            {t('reports.period.customRangeSeparator')}
+          </Text>
           <TextInput
             value={endDraft}
             onChangeText={commitEnd}
             placeholder="YYYY-MM"
-            className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900"
+            className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
           />
         </View>
       )}

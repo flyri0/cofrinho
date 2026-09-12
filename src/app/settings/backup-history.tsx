@@ -19,8 +19,8 @@ export default function BackupHistoryScreen() {
 
   if (history.length === 0) {
     return (
-      <View className="flex-1 items-center justify-center bg-white p-6">
-        <Text className="text-center text-base text-gray-500">
+      <View className="flex-1 items-center justify-center bg-background p-6">
+        <Text className="text-center text-base text-gray-500 dark:text-gray-300">
           {t('backup.history.emptyState')}
         </Text>
       </View>
@@ -29,10 +29,10 @@ export default function BackupHistoryScreen() {
 
   return (
     <FlatList
-      className="flex-1 bg-white"
+      className="flex-1 bg-background"
       data={history}
       keyExtractor={(entry) => String(entry.id)}
-      ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+      ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
       renderItem={({ item }) => {
         const isSuccess = item.status === 'success';
         return (
@@ -44,14 +44,14 @@ export default function BackupHistoryScreen() {
             className="flex-row items-center justify-between px-4 py-3"
           >
             <View className="flex-1 gap-0.5">
-              <Text className="text-base text-gray-900">
+              <Text className="text-base text-gray-900 dark:text-gray-100">
                 {formatDateTime(item.timestamp, i18n.language)}
               </Text>
-              <Text className="text-sm text-gray-500">
+              <Text className="text-sm text-gray-500 dark:text-gray-300">
                 {t(`backup.history.trigger.${item.trigger}`)}
               </Text>
             </View>
-            <Text className={`text-lg ${isSuccess ? 'text-emerald-600' : 'text-red-600'}`}>
+            <Text className={`text-lg ${isSuccess ? 'text-success' : 'text-error'}`}>
               {isSuccess ? '✓' : '✕'}
             </Text>
           </Pressable>

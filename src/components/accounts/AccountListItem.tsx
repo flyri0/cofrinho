@@ -48,12 +48,14 @@ export function AccountListItem({
       onLongPress={showOptions}
       className="flex-row items-center justify-between px-4 py-3"
     >
-      <Text className="flex-1 text-base text-gray-900">{account.name}</Text>
-      <Text className={`text-base ${isNegative ? 'font-semibold text-red-600' : 'text-gray-900'}`}>
+      <Text className="flex-1 text-base text-gray-900 dark:text-gray-100">{account.name}</Text>
+      <Text
+        className={`text-base ${isNegative ? 'font-semibold text-error' : 'text-gray-900 dark:text-gray-100'}`}
+      >
         {formatCents(account.currentBalance, account.currency, i18n.language)}
       </Text>
       <Pressable onPress={showOptions} hitSlop={12} className="ml-3 px-1">
-        <Text className="text-xl text-gray-400">⋮</Text>
+        <Text className="text-xl text-gray-400 dark:text-gray-300">⋮</Text>
       </Pressable>
     </Pressable>
   );

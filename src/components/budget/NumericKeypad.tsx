@@ -21,9 +21,9 @@ export function NumericKeypad({ onDigit, onBackspace }: NumericKeypadProps) {
           <View key={key} className="w-1/3 p-1">
             <Pressable
               onPress={() => (isBackspace ? onBackspace() : onDigit(key))}
-              className="items-center justify-center rounded-lg bg-gray-100 py-4"
+              className="items-center justify-center rounded-lg bg-surface py-4"
             >
-              <Text className="text-xl font-semibold text-gray-900">{key}</Text>
+              <Text className="text-xl font-semibold text-gray-900 dark:text-gray-100">{key}</Text>
             </Pressable>
           </View>
         );

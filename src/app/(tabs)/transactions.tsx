@@ -46,8 +46,8 @@ export default function TransactionsScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="flex-row items-center gap-2 border-b border-gray-200 px-4 py-3">
+    <View className="flex-1 bg-background">
+      <View className="flex-row items-center gap-2 border-b border-gray-200 dark:border-gray-800 px-4 py-3">
         <TextInput
           value={searchText}
           onChangeText={(text) => {
@@ -56,13 +56,13 @@ export default function TransactionsScreen() {
           }}
           onSubmitEditing={() => fetchTransactions()}
           placeholder={t('transactions.searchPlaceholder')}
-          className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-base"
+          className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-base"
         />
         <Pressable
           onPress={() => setIsFiltersVisible(true)}
-          className="rounded-lg bg-gray-100 px-3 py-2.5"
+          className="rounded-lg bg-surface px-3 py-2.5"
         >
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('transactions.filters.title')}
           </Text>
         </Pressable>
@@ -70,19 +70,17 @@ export default function TransactionsScreen() {
 
       <Pressable
         onPress={() => router.push('/transaction/new')}
-        className="border-b border-gray-200 px-4 py-2.5"
+        className="border-b border-gray-200 dark:border-gray-800 px-4 py-2.5"
       >
-        <Text className="text-sm font-medium text-blue-600">
-          {t('transactions.addTransaction')}
-        </Text>
+        <Text className="text-sm font-medium text-accent">{t('transactions.addTransaction')}</Text>
       </Pressable>
 
       {transactionsList.length === 0 ? (
         <View className="flex-1 items-center justify-center gap-2 p-6">
-          <Text className="text-lg font-semibold text-gray-900">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             {t('transactions.emptyState.title')}
           </Text>
-          <Text className="text-center text-base text-gray-500">
+          <Text className="text-center text-base text-gray-500 dark:text-gray-300">
             {t('transactions.emptyState.message')}
           </Text>
         </View>
@@ -90,7 +88,7 @@ export default function TransactionsScreen() {
         <FlatList
           data={transactionsList}
           keyExtractor={(transaction) => String(transaction.id)}
-          ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+          ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
           renderItem={({ item: transaction }) => (
             <TransactionListItem
               transaction={transaction}

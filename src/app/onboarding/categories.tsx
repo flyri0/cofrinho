@@ -40,16 +40,20 @@ export default function OnboardingCategoriesScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="gap-1 border-b border-gray-200 p-4">
-        <Text className="text-xl font-bold text-gray-900">{t('onboarding.categories.title')}</Text>
-        <Text className="text-sm text-gray-600">{t('onboarding.categories.description')}</Text>
+    <View className="flex-1 bg-background">
+      <View className="gap-1 border-b border-gray-200 dark:border-gray-800 p-4">
+        <Text className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          {t('onboarding.categories.title')}
+        </Text>
+        <Text className="text-sm text-gray-600 dark:text-gray-300">
+          {t('onboarding.categories.description')}
+        </Text>
       </View>
 
       <ScrollView contentContainerClassName="gap-5 p-4">
         {SUGGESTED_CATEGORY_GROUPS.map((group) => (
           <View key={group.key} className="gap-1">
-            <Text className="text-sm font-semibold text-gray-600">
+            <Text className="text-sm font-semibold text-gray-600 dark:text-gray-300">
               {t(`suggestedCategoryGroups.${group.key}`)}
             </Text>
             {group.categories.map((category) => {
@@ -62,13 +66,13 @@ export default function OnboardingCategoriesScreen() {
                 >
                   <View
                     className={`h-5 w-5 items-center justify-center rounded border ${
-                      checked ? 'border-blue-600 bg-blue-600' : 'border-gray-300'
+                      checked ? 'border-accent bg-accent' : 'border-gray-300 dark:border-gray-700'
                     }`}
                   >
                     {checked && <Text className="text-xs text-white">✓</Text>}
                   </View>
                   <Text className="text-lg">{category.icon}</Text>
-                  <Text className="text-base text-gray-900">
+                  <Text className="text-base text-gray-900 dark:text-gray-100">
                     {t(`suggestedCategoryNames.${category.key}`)}
                   </Text>
                 </Pressable>
@@ -78,8 +82,8 @@ export default function OnboardingCategoriesScreen() {
         ))}
       </ScrollView>
 
-      <View className="border-t border-gray-200 p-4">
-        <Pressable onPress={handleContinue} className="items-center rounded-lg bg-blue-600 py-3">
+      <View className="border-t border-gray-200 dark:border-gray-800 p-4">
+        <Pressable onPress={handleContinue} className="items-center rounded-lg bg-accent py-3">
           <Text className="text-base font-semibold text-white">
             {t('onboarding.categories.cta')}
           </Text>

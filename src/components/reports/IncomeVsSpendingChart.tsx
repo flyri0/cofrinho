@@ -20,7 +20,7 @@ export function IncomeVsSpendingChart({ data }: IncomeVsSpendingChartProps) {
   if (data.length === 0) {
     return (
       <View className="flex-1 items-center justify-center p-6">
-        <Text className="text-center text-base text-gray-500">
+        <Text className="text-center text-base text-gray-500 dark:text-gray-300">
           {t('reports.incomeVsSpending.emptyState')}
         </Text>
       </View>
@@ -35,14 +35,18 @@ export function IncomeVsSpendingChart({ data }: IncomeVsSpendingChartProps) {
     <View className="flex-1 p-4">
       <View className="mb-4 flex-row gap-6">
         <View>
-          <Text className="text-xs text-gray-500">{t('reports.incomeVsSpending.income')}</Text>
-          <Text className="text-base font-semibold text-emerald-600">
+          <Text className="text-xs text-gray-500 dark:text-gray-300">
+            {t('reports.incomeVsSpending.income')}
+          </Text>
+          <Text className="text-base font-semibold text-success">
             {formatCents(totalIncome, 'BRL', i18n.language)}
           </Text>
         </View>
         <View>
-          <Text className="text-xs text-gray-500">{t('reports.incomeVsSpending.spending')}</Text>
-          <Text className="text-base font-semibold text-red-600">
+          <Text className="text-xs text-gray-500 dark:text-gray-300">
+            {t('reports.incomeVsSpending.spending')}
+          </Text>
+          <Text className="text-base font-semibold text-error">
             {formatCents(totalSpending, 'BRL', i18n.language)}
           </Text>
         </View>
@@ -54,15 +58,15 @@ export function IncomeVsSpendingChart({ data }: IncomeVsSpendingChartProps) {
             <View key={entry.month} className="items-center gap-1.5">
               <View className="flex-row items-end gap-1" style={{ height: CHART_HEIGHT }}>
                 <View
-                  className="w-3 rounded-t bg-emerald-500"
+                  className="w-3 rounded-t bg-success"
                   style={{ height: Math.max(2, (entry.income / maxValue) * CHART_HEIGHT) }}
                 />
                 <View
-                  className="w-3 rounded-t bg-red-500"
+                  className="w-3 rounded-t bg-error"
                   style={{ height: Math.max(2, (entry.spending / maxValue) * CHART_HEIGHT) }}
                 />
               </View>
-              <Text className="text-xs text-gray-500">
+              <Text className="text-xs text-gray-500 dark:text-gray-300">
                 {formatMonthShort(entry.month, i18n.language)}
               </Text>
             </View>

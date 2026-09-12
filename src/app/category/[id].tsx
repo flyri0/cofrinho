@@ -39,7 +39,7 @@ export default function CategoryDetailScreen() {
   }, [categoryId, fetchCategoryHistory]);
 
   if (!category) {
-    return <View className="flex-1 bg-white" />;
+    return <View className="flex-1 bg-background" />;
   }
 
   function saveName() {
@@ -91,13 +91,13 @@ export default function CategoryDetailScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background">
       <Stack.Screen options={{ title: category.name }} />
-      <View className="gap-3 border-b border-gray-200 p-4">
+      <View className="gap-3 border-b border-gray-200 dark:border-gray-800 p-4">
         <View className="flex-row items-center gap-3">
           <Pressable
             onPress={() => setIsEmojiPickerVisible(true)}
-            className="h-12 w-12 items-center justify-center rounded-lg bg-gray-100"
+            className="h-12 w-12 items-center justify-center rounded-lg bg-surface"
           >
             <Text className="text-2xl">{category.icon ?? '❓'}</Text>
           </Pressable>
@@ -109,7 +109,7 @@ export default function CategoryDetailScreen() {
               onChangeText={setNameDraft}
               onBlur={saveName}
               onSubmitEditing={saveName}
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-lg"
+              className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-lg"
             />
           ) : (
             <Pressable
@@ -119,19 +119,21 @@ export default function CategoryDetailScreen() {
                 setIsEditingName(true);
               }}
             >
-              <Text className="text-xl font-semibold text-gray-900">{category.name}</Text>
+              <Text className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                {category.name}
+              </Text>
             </Pressable>
           )}
         </View>
 
         <Pressable onPress={() => setIsGroupPickerVisible(true)}>
-          <Text className="text-sm text-gray-500">
+          <Text className="text-sm text-gray-500 dark:text-gray-300">
             {t('categoryDetail.groupLabel')}: {group?.name ?? '—'}
           </Text>
         </Pressable>
 
         <View className="gap-1.5">
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('categoryDetail.targetLabel')}
           </Text>
           <MoneyInput
@@ -142,38 +144,44 @@ export default function CategoryDetailScreen() {
         </View>
 
         <Pressable onPress={handleArchive} className="self-start">
-          <Text className="text-sm font-medium text-red-600">
+          <Text className="text-sm font-medium text-error">
             {t('categoryDetail.options.archive')}
           </Text>
         </Pressable>
       </View>
 
       <View className="p-4">
-        <Text className="mb-2 text-sm font-semibold text-gray-600">
+        <Text className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-300">
           {t('categoryDetail.history.title')}
         </Text>
         <View className="flex-row justify-between px-1 pb-2">
-          <Text className="text-xs text-gray-400">{t('categoryDetail.history.assigned')}</Text>
-          <Text className="text-xs text-gray-400">{t('categoryDetail.history.activity')}</Text>
-          <Text className="text-xs text-gray-400">{t('categoryDetail.history.available')}</Text>
+          <Text className="text-xs text-gray-400 dark:text-gray-300">
+            {t('categoryDetail.history.assigned')}
+          </Text>
+          <Text className="text-xs text-gray-400 dark:text-gray-300">
+            {t('categoryDetail.history.activity')}
+          </Text>
+          <Text className="text-xs text-gray-400 dark:text-gray-300">
+            {t('categoryDetail.history.available')}
+          </Text>
         </View>
         <FlatList
           data={history}
           keyExtractor={(entry) => entry.month}
-          ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+          ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
           renderItem={({ item }) => (
             <View className="flex-row items-center justify-between py-2">
-              <Text className="w-16 text-sm text-gray-700">
+              <Text className="w-16 text-sm text-gray-700 dark:text-gray-300">
                 {formatMonthLabel(item.month, i18n.language)}
               </Text>
-              <Text className="flex-1 text-right text-sm text-gray-600">
+              <Text className="flex-1 text-right text-sm text-gray-600 dark:text-gray-300">
                 {formatCents(item.assigned, 'BRL', i18n.language)}
               </Text>
-              <Text className="flex-1 text-right text-sm text-gray-600">
+              <Text className="flex-1 text-right text-sm text-gray-600 dark:text-gray-300">
                 {formatCents(item.activity, 'BRL', i18n.language)}
               </Text>
               <Text
-                className={`flex-1 text-right text-sm font-medium ${item.available < 0 ? 'text-red-600' : 'text-gray-900'}`}
+                className={`flex-1 text-right text-sm font-medium ${item.available < 0 ? 'text-error' : 'text-gray-900 dark:text-gray-100'}`}
               >
                 {formatCents(item.available, 'BRL', i18n.language)}
               </Text>
@@ -192,8 +200,11 @@ export default function CategoryDetailScreen() {
           className="flex-1 justify-end bg-black/40"
           onPress={() => setIsEmojiPickerVisible(false)}
         >
-          <Pressable className="rounded-t-2xl bg-white p-4" onPress={(e) => e.stopPropagation()}>
-            <Text className="mb-3 text-center text-base font-semibold text-gray-900">
+          <Pressable
+            className="rounded-t-2xl bg-background p-4"
+            onPress={(e) => e.stopPropagation()}
+          >
+            <Text className="mb-3 text-center text-base font-semibold text-gray-900 dark:text-gray-100">
               {t('categoryDetail.options.changeIcon')}
             </Text>
             <EmojiPicker value={category.icon} onChange={handleChangeIcon} />
@@ -212,19 +223,19 @@ export default function CategoryDetailScreen() {
           onPress={() => setIsGroupPickerVisible(false)}
         >
           <Pressable
-            className="max-h-96 rounded-t-2xl bg-white p-4"
+            className="max-h-96 rounded-t-2xl bg-background p-4"
             onPress={(e) => e.stopPropagation()}
           >
-            <Text className="mb-3 text-center text-base font-semibold text-gray-900">
+            <Text className="mb-3 text-center text-base font-semibold text-gray-900 dark:text-gray-100">
               {t('categoryDetail.moveGroupTitle')}
             </Text>
             <FlatList
               data={groups}
               keyExtractor={(g: CategoryGroupRow) => String(g.id)}
-              ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+              ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
               renderItem={({ item }) => (
                 <Pressable onPress={() => handleMoveGroup(item.id)} className="py-3">
-                  <Text className="text-base text-gray-900">{item.name}</Text>
+                  <Text className="text-base text-gray-900 dark:text-gray-100">{item.name}</Text>
                 </Pressable>
               )}
             />

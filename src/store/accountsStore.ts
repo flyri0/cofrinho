@@ -18,6 +18,7 @@ import {
   validateAccountForm,
   type AccountFormErrors,
 } from '@/lib/accounts';
+import { computeReorderSwap } from '@/lib/reorder';
 
 export type AccountRow = typeof accounts.$inferSelect;
 export type AccountLoanDetailsRow = typeof accountLoanDetails.$inferSelect;
@@ -56,7 +57,8 @@ export interface AccountsState {
   accounts: AccountRow[];
   isLoading: boolean;
   error: string | null;
-  fetchAccounts: () => Promise<void>;
+  /** `includeArchived` defaults to false (every existing screen's expected behavior). */
+  fetchAccounts: (includeArchived?: boolean) => Promise<void>;
   getAccountWithLoanDetails: (id: number) => Promise<AccountWithLoanDetails | null>;
   createAccount: (
     input: NewAccountFormInput,
@@ -64,6 +66,10 @@ export interface AccountsState {
   ) => Promise<AccountMutationResult>;
   updateAccount: (id: number, input: AccountFormInput) => Promise<AccountMutationResult>;
   archiveAccount: (id: number) => Promise<void>;
+  /** see technical-specification.md §6.2 — "bulk archive" in the edit-mode Accounts tab. */
+  archiveAccounts: (ids: number[]) => Promise<void>;
+  /** see technical-specification.md §6.2 — "drag-to-reorder"; see lib/reorder.ts for why this is up/down instead. */
+  reorderAccount: (id: number, direction: 'up' | 'down') => Promise<void>;
 }
 
 function toErrorMessage(error: unknown): string {
@@ -174,10 +180,12 @@ export function createAccountsStore(db: AppDatabase): UseBoundStore<StoreApi<Acc
     isLoading: false,
     error: null,
 
-    fetchAccounts: async () => {
+    fetchAccounts: async (includeArchived = false) => {
       set({ isLoading: true, error: null });
       try {
-        const rows = await db.select().from(accounts).where(eq(accounts.archived, false));
+        const rows = includeArchived
+          ? await db.select().from(accounts)
+          : await db.select().from(accounts).where(eq(accounts.archived, false));
         rows.sort((a, b) => a.sortOrder - b.sortOrder || a.id - b.id);
         set({ accounts: rows, isLoading: false });
       } catch (error) {
@@ -242,6 +250,37 @@ export function createAccountsStore(db: AppDatabase): UseBoundStore<StoreApi<Acc
         await archiveCreditCardPaymentCategory(db, id);
       }
 
+      await get().fetchAccounts();
+    },
+
+    archiveAccounts: async (ids) => {
+      for (const id of ids) {
+        await get().archiveAccount(id);
+      }
+    },
+
+    // Reorders within the account's own kind group (cash/credit/loan/tracking)
+    // — those render as separate sections (§5.5), so "up/down" only makes
+    // sense relative to same-kind neighbors, not the global sort order.
+    reorderAccount: async (id, direction) => {
+      const account = get().accounts.find((a) => a.id === id);
+      if (!account) return;
+
+      const sameKind = get()
+        .accounts.filter((a) => a.categoryKind === account.categoryKind)
+        .sort((a, b) => a.sortOrder - b.sortOrder);
+      const swap = computeReorderSwap(sameKind, id, direction);
+      if (!swap) return;
+
+      const [first, second] = swap;
+      await db
+        .update(accounts)
+        .set({ sortOrder: first.sortOrder })
+        .where(eq(accounts.id, first.id));
+      await db
+        .update(accounts)
+        .set({ sortOrder: second.sortOrder })
+        .where(eq(accounts.id, second.id));
       await get().fetchAccounts();
     },
   }));

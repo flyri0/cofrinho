@@ -26,18 +26,18 @@ export default function AccountPickerScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background">
       <FlatList
         data={filteredAccounts}
         keyExtractor={(account) => String(account.id)}
-        ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+        ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
         renderItem={({ item: account }) => (
           <Pressable
             onPress={() => selectAccount(account.id)}
             className="flex-row items-center justify-between px-4 py-3"
           >
-            <Text className="text-base text-gray-900">{account.name}</Text>
-            <Text className="text-sm text-gray-500">
+            <Text className="text-base text-gray-900 dark:text-gray-100">{account.name}</Text>
+            <Text className="text-sm text-gray-500 dark:text-gray-300">
               {formatCents(account.currentBalance, account.currency, i18n.language)}
             </Text>
           </Pressable>

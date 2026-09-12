@@ -35,12 +35,12 @@ export default function CategoryPickerScreen() {
   const groupBudgets = groupCategoryBudgets(groups, filteredCategories, numbersByCategory);
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background">
       <TextInput
         value={search}
         onChangeText={setSearch}
         placeholder={t('categoryPicker.searchPlaceholder')}
-        className="m-4 rounded-lg border border-gray-300 px-3 py-2.5 text-base"
+        className="m-4 rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base"
       />
       <FlatList
         data={groupBudgets}
@@ -49,28 +49,32 @@ export default function CategoryPickerScreen() {
           draftType === 'inflow' ? (
             <Pressable
               onPress={() => selectCategory(null)}
-              className="border-b border-gray-100 px-4 py-3"
+              className="border-b border-gray-100 dark:border-gray-800 px-4 py-3"
             >
-              <Text className="text-base text-gray-900">{t('categoryPicker.incomeOption')}</Text>
+              <Text className="text-base text-gray-900 dark:text-gray-100">
+                {t('categoryPicker.incomeOption')}
+              </Text>
             </Pressable>
           ) : null
         }
         renderItem={({ item: groupBudget }) => (
           <View>
-            <View className="bg-gray-50 px-4 py-2">
-              <Text className="text-sm font-semibold text-gray-600">{groupBudget.group.name}</Text>
+            <View className="bg-surface px-4 py-2">
+              <Text className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                {groupBudget.group.name}
+              </Text>
             </View>
             {groupBudget.categories.map((category) => (
               <Pressable
                 key={category.id}
                 onPress={() => selectCategory(category.id)}
-                className="flex-row items-center justify-between border-b border-gray-100 px-4 py-3"
+                className="flex-row items-center justify-between border-b border-gray-100 dark:border-gray-800 px-4 py-3"
               >
-                <Text className="flex-1 text-base text-gray-900">
+                <Text className="flex-1 text-base text-gray-900 dark:text-gray-100">
                   {category.icon ? `${category.icon} ` : ''}
                   {category.name}
                 </Text>
-                <Text className="text-sm text-gray-500">
+                <Text className="text-sm text-gray-500 dark:text-gray-300">
                   {formatCents(
                     numbersByCategory[category.id]?.available ?? 0,
                     'BRL',

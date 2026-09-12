@@ -66,32 +66,32 @@ export default function BudgetScreen() {
     : [];
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="flex-row items-center justify-between border-b border-gray-200 px-4 py-3">
+    <View className="flex-1 bg-background">
+      <View className="flex-row items-center justify-between border-b border-gray-200 dark:border-gray-800 px-4 py-3">
         <Pressable onPress={() => setMonth(shiftMonth(selectedMonth, -1))} hitSlop={8}>
-          <Text className="text-xl text-gray-500">‹</Text>
+          <Text className="text-xl text-gray-500 dark:text-gray-300">‹</Text>
         </Pressable>
-        <Text className="text-base font-semibold text-gray-900">
+        <Text className="text-base font-semibold text-gray-900 dark:text-gray-100">
           {formatMonthLabel(selectedMonth, i18n.language)}
         </Text>
         <Pressable onPress={() => setMonth(shiftMonth(selectedMonth, 1))} hitSlop={8}>
-          <Text className="text-xl text-gray-500">›</Text>
+          <Text className="text-xl text-gray-500 dark:text-gray-300">›</Text>
         </Pressable>
       </View>
 
       <Pressable
         onPress={() => router.push('/category/manage')}
-        className="border-b border-gray-200 px-4 py-2.5"
+        className="border-b border-gray-200 dark:border-gray-800 px-4 py-2.5"
       >
-        <Text className="text-sm font-medium text-blue-600">{t('budget.manageCategories')}</Text>
+        <Text className="text-sm font-medium text-accent">{t('budget.manageCategories')}</Text>
       </Pressable>
 
       {groups.length === 0 ? (
         <View className="flex-1 items-center justify-center gap-2 p-6">
-          <Text className="text-lg font-semibold text-gray-900">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             {t('budget.emptyState.title')}
           </Text>
-          <Text className="text-center text-base text-gray-500">
+          <Text className="text-center text-base text-gray-500 dark:text-gray-300">
             {t('budget.emptyState.message')}
           </Text>
         </View>
@@ -103,18 +103,20 @@ export default function BudgetScreen() {
             <View>
               <Pressable
                 onPress={() => toggleGroup(groupBudget.group.id)}
-                className="flex-row items-center justify-between bg-gray-50 px-4 py-2"
+                className="flex-row items-center justify-between bg-surface px-4 py-2"
               >
-                <Text className="text-sm font-semibold text-gray-600">
+                <Text className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                   {groupBudget.group.name}
                 </Text>
                 <View className="flex-row gap-3">
-                  <Text className="text-sm text-gray-500">
+                  <Text className="text-sm text-gray-500 dark:text-gray-300">
                     {formatCents(groupBudget.assignedTotal, 'BRL', i18n.language)}
                   </Text>
                   <Text
                     className={`text-sm font-medium ${
-                      groupBudget.availableTotal < 0 ? 'text-red-600' : 'text-gray-700'
+                      groupBudget.availableTotal < 0
+                        ? 'text-error'
+                        : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     {formatCents(groupBudget.availableTotal, 'BRL', i18n.language)}
@@ -136,7 +138,7 @@ export default function BudgetScreen() {
                 ))}
             </View>
           )}
-          ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+          ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
         />
       )}
 

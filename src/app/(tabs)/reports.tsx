@@ -57,18 +57,18 @@ export default function ReportsScreen() {
   }
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="flex-row border-b border-gray-200">
+    <View className="flex-1 bg-background">
+      <View className="flex-row border-b border-gray-200 dark:border-gray-800">
         {REPORT_TABS.map((tab) => (
           <Pressable
             key={tab}
             onPress={() => setActiveTab(tab)}
             className={`flex-1 items-center border-b-2 py-3 ${
-              activeTab === tab ? 'border-blue-600' : 'border-transparent'
+              activeTab === tab ? 'border-accent' : 'border-transparent'
             }`}
           >
             <Text
-              className={`text-sm font-medium ${activeTab === tab ? 'text-blue-600' : 'text-gray-500'}`}
+              className={`text-sm font-medium ${activeTab === tab ? 'text-accent' : 'text-gray-500 dark:text-gray-300'}`}
             >
               {t(`reports.tabs.${tab}`)}
             </Text>

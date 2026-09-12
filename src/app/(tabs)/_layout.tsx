@@ -11,16 +11,8 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: t('tabs.home'),
-          // Temporary entry point: there's no Settings tab/menu yet (§6.1,
-          // §6.2, §6.4, §6.5 are separate, not-yet-built milestones), so this
-          // gear icon is the only way to reach the Backup screen (§6.3) for
-          // now. Replace with a proper Settings root once those exist.
           headerRight: () => (
-            <Pressable
-              onPress={() => router.push('/settings/backup')}
-              hitSlop={12}
-              className="pr-4"
-            >
+            <Pressable onPress={() => router.push('/settings')} hitSlop={12} className="pr-4">
               <Text className="text-xl">⚙️</Text>
             </Pressable>
           ),

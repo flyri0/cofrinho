@@ -48,7 +48,7 @@ export function EmojiPicker({ value, onChange }: EmojiPickerProps) {
           key={icon}
           onPress={() => onChange(icon)}
           className={`h-11 w-11 items-center justify-center rounded-lg ${
-            value === icon ? 'bg-blue-100' : 'bg-gray-100'
+            value === icon ? 'bg-accent/15' : 'bg-surface'
           }`}
         >
           <Text className="text-xl">{icon}</Text>

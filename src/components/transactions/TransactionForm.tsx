@@ -78,9 +78,11 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
   }
 
   return (
-    <ScrollView className="flex-1 bg-white" contentContainerClassName="gap-5 p-4">
+    <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-5 p-4">
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">{t('transactionForm.typeLabel')}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {t('transactionForm.typeLabel')}
+        </Text>
         <TransactionTypeSelector
           value={draft.type}
           onChange={(type) => draft.setField('type', type)}
@@ -88,7 +90,7 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
       </View>
 
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {t('transactionForm.amountLabel')}
         </Text>
         <MoneyInput
@@ -97,12 +99,12 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
           allowNegative={false}
         />
         {errors.amount && (
-          <Text className="text-sm text-red-600">{t(errorKey('amount', errors.amount))}</Text>
+          <Text className="text-sm text-error">{t(errorKey('amount', errors.amount))}</Text>
         )}
       </View>
 
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {isTransferLike
             ? t('transactionForm.fromAccountLabel')
             : t('transactionForm.accountLabel')}
@@ -111,20 +113,26 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
           onPress={() =>
             router.push({ pathname: '/transaction/account-picker', params: { field: 'account' } })
           }
-          className="rounded-lg border border-gray-300 px-3 py-2.5"
+          className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5"
         >
-          <Text className={account ? 'text-base text-gray-900' : 'text-base text-gray-400'}>
+          <Text
+            className={
+              account
+                ? 'text-base text-gray-900 dark:text-gray-100'
+                : 'text-base text-gray-400 dark:text-gray-300'
+            }
+          >
             {account ? account.name : t('transactionForm.selectAccount')}
           </Text>
         </Pressable>
         {errors.accountId && (
-          <Text className="text-sm text-red-600">{t(errorKey('accountId', errors.accountId))}</Text>
+          <Text className="text-sm text-error">{t(errorKey('accountId', errors.accountId))}</Text>
         )}
       </View>
 
       {isTransferLike && (
         <View className="gap-1.5">
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('transactionForm.toAccountLabel')}
           </Text>
           <Pressable
@@ -137,14 +145,20 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
                 },
               })
             }
-            className="rounded-lg border border-gray-300 px-3 py-2.5"
+            className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5"
           >
-            <Text className={toAccount ? 'text-base text-gray-900' : 'text-base text-gray-400'}>
+            <Text
+              className={
+                toAccount
+                  ? 'text-base text-gray-900 dark:text-gray-100'
+                  : 'text-base text-gray-400 dark:text-gray-300'
+              }
+            >
               {toAccount ? toAccount.name : t('transactionForm.selectAccount')}
             </Text>
           </Pressable>
           {errors.toAccountId && (
-            <Text className="text-sm text-red-600">
+            <Text className="text-sm text-error">
               {t(errorKey('toAccountId', errors.toAccountId))}
             </Text>
           )}
@@ -153,19 +167,25 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
 
       {!isTransferLike && (
         <View className="gap-1.5">
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('transactionForm.categoryLabel')}
           </Text>
           <Pressable
             onPress={() => router.push('/transaction/category-picker')}
-            className="rounded-lg border border-gray-300 px-3 py-2.5"
+            className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5"
           >
-            <Text className={category ? 'text-base text-gray-900' : 'text-base text-gray-400'}>
+            <Text
+              className={
+                category
+                  ? 'text-base text-gray-900 dark:text-gray-100'
+                  : 'text-base text-gray-400 dark:text-gray-300'
+              }
+            >
               {category ? category.name : t('transactionForm.categoryIncomePlaceholder')}
             </Text>
           </Pressable>
           {errors.categoryId && (
-            <Text className="text-sm text-red-600">
+            <Text className="text-sm text-error">
               {t(errorKey('categoryId', errors.categoryId))}
             </Text>
           )}
@@ -174,7 +194,7 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
 
       {!isTransferLike && (
         <View className="gap-1.5">
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('transactionForm.payeeLabel')}
           </Text>
           <PayeeInput
@@ -185,20 +205,22 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
       )}
 
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">{t('transactionForm.dateLabel')}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {t('transactionForm.dateLabel')}
+        </Text>
         <TextInput
           value={draft.date}
           onChangeText={(text) => draft.setField('date', text)}
           placeholder="YYYY-MM-DD"
-          className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+          className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
         />
         {errors.date && (
-          <Text className="text-sm text-red-600">{t(errorKey('date', errors.date))}</Text>
+          <Text className="text-sm text-error">{t(errorKey('date', errors.date))}</Text>
         )}
       </View>
 
       <Pressable onPress={() => setShowAdvanced((prev) => !prev)}>
-        <Text className="text-sm font-medium text-blue-600">
+        <Text className="text-sm font-medium text-accent">
           {showAdvanced ? t('transactionForm.showLess') : t('transactionForm.showMore')}
         </Text>
       </Pressable>
@@ -206,28 +228,28 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
       {showAdvanced && (
         <View className="gap-4">
           <View className="gap-1.5">
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('transactionForm.memoLabel')}
             </Text>
             <TextInput
               value={draft.memo}
               onChangeText={(text) => draft.setField('memo', text)}
-              className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+              className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
               multiline
             />
           </View>
           <View className="gap-1.5">
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('transactionForm.flagLabel')}
             </Text>
             <TextInput
               value={draft.flag ?? ''}
               onChangeText={(text) => draft.setField('flag', text || null)}
-              className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+              className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
             />
           </View>
           <View className="flex-row items-center justify-between">
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('transactionForm.clearedLabel')}
             </Text>
             <Switch
@@ -241,7 +263,7 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
       <Pressable
         onPress={handleSave}
         disabled={isSubmitting}
-        className="items-center rounded-lg bg-blue-600 py-3"
+        className="items-center rounded-lg bg-accent py-3"
       >
         {isSubmitting ? (
           <ActivityIndicator color="white" />
@@ -251,10 +273,8 @@ export function TransactionForm({ mode, onSubmit, onSuccess, onDelete }: Transac
       </Pressable>
 
       {mode === 'edit' && onDelete && (
-        <Pressable onPress={onDelete} className="items-center rounded-lg bg-red-50 py-3">
-          <Text className="text-base font-semibold text-red-600">
-            {t('transactionForm.delete')}
-          </Text>
+        <Pressable onPress={onDelete} className="items-center rounded-lg bg-error/10 py-3">
+          <Text className="text-base font-semibold text-error">{t('transactionForm.delete')}</Text>
         </Pressable>
       )}
     </ScrollView>

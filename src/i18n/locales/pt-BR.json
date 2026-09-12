@@ -157,6 +157,7 @@
   },
   "categoryManage": {
     "title": "Categorias e grupos",
+    "showArchived": "Mostrar arquivadas",
     "newGroup": "Novo grupo",
     "newGroupPlaceholder": "Nome do grupo",
     "newCategoryPlaceholder": "Nova categoria",
@@ -336,6 +337,58 @@
         "auto_foreground": "Automático (app aberto)",
         "auto_background": "Automático (app fechado)"
       }
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "appearance": {
+      "title": "Aparência",
+      "mode": "Modo",
+      "modes": {
+        "light": "Claro",
+        "dark": "Escuro",
+        "system": "Seguir sistema"
+      },
+      "colorTheme": "Tema de cores",
+      "themes": {
+        "ocean": "Oceano",
+        "sunset": "Pôr do sol",
+        "forest": "Floresta"
+      }
+    },
+    "accountsCategories": {
+      "title": "Contas e Categorias",
+      "tabs": {
+        "accounts": "Contas",
+        "categories": "Categorias e Grupos"
+      },
+      "archiveSelected_one": "Arquivar {{count}} conta",
+      "archiveSelected_other": "Arquivar {{count}} contas"
+    },
+    "preferences": {
+      "title": "Preferências",
+      "currencySymbol": "Símbolo da moeda",
+      "symbolPosition": "Posição do símbolo",
+      "symbolPositions": {
+        "before": "Antes do valor",
+        "after": "Depois do valor"
+      },
+      "decimalSeparator": "Separador decimal",
+      "comma": "Vírgula (,)",
+      "period": "Ponto (.)",
+      "monthStartDay": "Dia de início do mês do orçamento",
+      "language": "Idioma",
+      "languages": {
+        "pt-BR": "Português (Brasil)",
+        "en": "English"
+      }
+    },
+    "about": {
+      "title": "Sobre",
+      "version": "Versão",
+      "repoLink": "Ver código-fonte no GitHub",
+      "newIssueLink": "Relatar um problema",
+      "license": "Licença (MIT)"
     }
   }
 }

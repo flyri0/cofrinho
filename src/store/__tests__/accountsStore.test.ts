@@ -305,4 +305,94 @@ describe('accountsStore', () => {
       );
     expect(groupRow.archived).toBe(false); // card B's payment category is still active
   });
+
+  describe('§6.2 edit-mode Accounts tab', () => {
+    it('includes archived accounts only when explicitly requested', async () => {
+      const store = createAccountsStore(db);
+      const created = await store.getState().createAccount({
+        name: 'Old Wallet',
+        type: 'cash',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      if (!created.ok) throw new Error('expected creation to succeed');
+      await store.getState().archiveAccount(created.id);
+
+      await store.getState().fetchAccounts();
+      expect(store.getState().accounts).toHaveLength(0);
+
+      await store.getState().fetchAccounts(true);
+      expect(store.getState().accounts).toHaveLength(1);
+      expect(store.getState().accounts[0].archived).toBe(true);
+    });
+
+    it('bulk-archives every given account id', async () => {
+      const store = createAccountsStore(db);
+      const a = await store.getState().createAccount({
+        name: 'A',
+        type: 'cash',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      const b = await store.getState().createAccount({
+        name: 'B',
+        type: 'cash',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      if (!a.ok || !b.ok) throw new Error('expected both accounts to be created');
+
+      await store.getState().archiveAccounts([a.id, b.id]);
+
+      expect(store.getState().accounts).toHaveLength(0);
+      const rows = await db.select().from(accounts);
+      expect(rows.every((r) => r.archived)).toBe(true);
+    });
+
+    it('reorders two accounts of the same kind', async () => {
+      const store = createAccountsStore(db);
+      const a = await store.getState().createAccount({
+        name: 'A',
+        type: 'cash',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      const b = await store.getState().createAccount({
+        name: 'B',
+        type: 'cash',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      if (!a.ok || !b.ok) throw new Error('expected both accounts to be created');
+      expect(store.getState().accounts.map((acc) => acc.name)).toEqual(['A', 'B']);
+
+      await store.getState().reorderAccount(b.id, 'up');
+
+      expect(store.getState().accounts.map((acc) => acc.name)).toEqual(['B', 'A']);
+    });
+
+    it('does not reorder across different kind groups (edge case)', async () => {
+      const store = createAccountsStore(db);
+      const cash = await store.getState().createAccount({
+        name: 'Checking',
+        type: 'checking',
+        balanceCents: 0,
+        interestRateAnnualInput: '',
+        monthlyPaymentCents: 0,
+      });
+      if (!cash.ok) throw new Error('expected creation to succeed');
+
+      // Only one cash account exists, so moving it in either direction is a
+      // no-op even though other-kind accounts might otherwise look adjacent
+      // by raw (global) sort order.
+      await store.getState().reorderAccount(cash.id, 'down');
+      const [row] = await db.select().from(accounts).where(eq(accounts.id, cash.id));
+      expect(row.sortOrder).toBe(0);
+    });
+  });
 });

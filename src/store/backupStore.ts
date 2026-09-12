@@ -26,6 +26,8 @@ import {
   uploadBackupFile,
 } from '@/lib/googleDrive';
 
+import { ensureAppSettingsRow } from './appSettingsRow';
+
 export type BackupLogRow = typeof backupLog.$inferSelect;
 
 // see technical-specification.md §6.3 — a single, visible folder at the root
@@ -60,28 +62,6 @@ export interface BackupState {
 
 function toErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
-}
-
-// Singleton row (id=1, enforced by a check constraint) — created lazily with
-// placeholder defaults for the columns this milestone doesn't own (theme/
-// currency/locale belong to a future Appearance/Preferences milestone, §6.1/
-// §6.4). autoBackupEnabled defaults to false: there's nothing to back up to
-// until the user connects an account, so defaulting it "on" before that would
-// be presumptuous.
-async function ensureAppSettingsRow(db: AppDatabase): Promise<typeof appSettings.$inferSelect> {
-  const [existing] = await db.select().from(appSettings).where(eq(appSettings.id, 1)).limit(1);
-  if (existing) return existing;
-
-  const [inserted] = await db
-    .insert(appSettings)
-    .values({
-      id: 1,
-      themeMode: 'system',
-      colorThemeId: 'ocean',
-      autoBackupEnabled: false,
-    })
-    .returning();
-  return inserted;
 }
 
 async function recordBackupAttempt(

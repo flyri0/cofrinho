@@ -157,6 +157,7 @@
   },
   "categoryManage": {
     "title": "Categories and groups",
+    "showArchived": "Show archived",
     "newGroup": "New group",
     "newGroupPlaceholder": "Group name",
     "newCategoryPlaceholder": "New category",
@@ -336,6 +337,58 @@
         "auto_foreground": "Automatic (app opened)",
         "auto_background": "Automatic (app closed)"
       }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": {
+      "title": "Appearance",
+      "mode": "Mode",
+      "modes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "Follow system"
+      },
+      "colorTheme": "Color theme",
+      "themes": {
+        "ocean": "Ocean",
+        "sunset": "Sunset",
+        "forest": "Forest"
+      }
+    },
+    "accountsCategories": {
+      "title": "Accounts and Categories",
+      "tabs": {
+        "accounts": "Accounts",
+        "categories": "Categories and Groups"
+      },
+      "archiveSelected_one": "Archive {{count}} account",
+      "archiveSelected_other": "Archive {{count}} accounts"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "currencySymbol": "Currency symbol",
+      "symbolPosition": "Symbol position",
+      "symbolPositions": {
+        "before": "Before amount",
+        "after": "After amount"
+      },
+      "decimalSeparator": "Decimal separator",
+      "comma": "Comma (,)",
+      "period": "Period (.)",
+      "monthStartDay": "Budget month start day",
+      "language": "Language",
+      "languages": {
+        "pt-BR": "Português (Brasil)",
+        "en": "English"
+      }
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "repoLink": "View source on GitHub",
+      "newIssueLink": "Report an issue",
+      "license": "License (MIT)"
     }
   }
 }

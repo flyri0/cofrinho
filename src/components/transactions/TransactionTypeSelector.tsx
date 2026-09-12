@@ -19,10 +19,10 @@ export function TransactionTypeSelector({ value, onChange }: TransactionTypeSele
         <Pressable
           key={type}
           onPress={() => onChange(type)}
-          className={`rounded-full px-3 py-2 ${value === type ? 'bg-blue-600' : 'bg-gray-100'}`}
+          className={`rounded-full px-3 py-2 ${value === type ? 'bg-accent' : 'bg-surface'}`}
         >
           <Text
-            className={`text-sm font-medium ${value === type ? 'text-white' : 'text-gray-700'}`}
+            className={`text-sm font-medium ${value === type ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}
           >
             {t(`transactionTypes.${type}`)}
           </Text>

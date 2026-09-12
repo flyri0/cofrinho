@@ -42,12 +42,10 @@ export function MoneyInput({
           disabled={!editable}
           testID={testID ? `${testID}-sign-toggle` : undefined}
           className={`h-11 w-11 items-center justify-center rounded-lg ${
-            isNegative ? 'bg-red-100' : 'bg-green-100'
+            isNegative ? 'bg-error/15' : 'bg-success/15'
           }`}
         >
-          <Text
-            className={`text-lg font-semibold ${isNegative ? 'text-red-600' : 'text-green-600'}`}
-          >
+          <Text className={`text-lg font-semibold ${isNegative ? 'text-error' : 'text-success'}`}>
             {isNegative ? '−' : '+'}
           </Text>
         </Pressable>
@@ -58,8 +56,10 @@ export function MoneyInput({
         value={formatCents(Math.abs(value), currency, i18n.language)}
         onChangeText={handleChangeText}
         testID={testID}
-        className={`flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-base ${
-          editable ? 'bg-white text-gray-900' : 'bg-gray-100 text-gray-500'
+        className={`flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-base dark:border-gray-700 ${
+          editable
+            ? 'bg-background text-gray-900 dark:text-gray-100'
+            : 'bg-surface text-gray-500 dark:text-gray-400'
         }`}
       />
     </View>

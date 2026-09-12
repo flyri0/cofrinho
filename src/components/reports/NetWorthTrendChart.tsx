@@ -35,7 +35,7 @@ export function NetWorthTrendChart({ data }: NetWorthTrendChartProps) {
       <View className="mb-4">
         <Text className="text-xs text-gray-500">{t('reports.netWorth.current')}</Text>
         <Text
-          className={`text-2xl font-bold ${latest.netWorth < 0 ? 'text-red-600' : 'text-gray-900'}`}
+          className={`text-2xl font-bold ${latest.netWorth < 0 ? 'text-error' : 'text-gray-900'}`}
         >
           {formatCents(latest.netWorth, 'BRL', i18n.language)}
         </Text>
@@ -50,13 +50,13 @@ export function NetWorthTrendChart({ data }: NetWorthTrendChartProps) {
               <View key={entry.month} className="items-center gap-1.5">
                 <View style={{ height: HALF_HEIGHT }} className="justify-end">
                   {!isNegative && (
-                    <View className="w-4 rounded-t bg-blue-500" style={{ height: barHeight }} />
+                    <View className="w-4 rounded-t bg-success" style={{ height: barHeight }} />
                   )}
                 </View>
-                <View className="h-px w-6 bg-gray-300" />
+                <View className="h-px w-6 bg-gray-300 dark:bg-gray-600" />
                 <View style={{ height: HALF_HEIGHT }}>
                   {isNegative && (
-                    <View className="w-4 rounded-b bg-red-500" style={{ height: barHeight }} />
+                    <View className="w-4 rounded-b bg-error" style={{ height: barHeight }} />
                   )}
                 </View>
                 <Text className="text-xs text-gray-500">

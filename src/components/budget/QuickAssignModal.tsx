@@ -65,27 +65,27 @@ function QuickAssignModalContent({
   const cents = digitsToCents(digits);
 
   return (
-    <Pressable className="rounded-t-2xl bg-white p-4" onPress={(e) => e.stopPropagation()}>
-      <Text className="text-center text-sm text-gray-500">{categoryName}</Text>
-      <Text className="mb-4 text-center text-3xl font-bold text-gray-900">
+    <Pressable className="rounded-t-2xl bg-background p-4" onPress={(e) => e.stopPropagation()}>
+      <Text className="text-center text-sm text-gray-500 dark:text-gray-300">{categoryName}</Text>
+      <Text className="mb-4 text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
         {formatCents(cents, 'BRL', i18n.language)}
       </Text>
 
       <View className="mb-4 flex-row gap-2">
         <Pressable
           onPress={() => setDigits('0')}
-          className="flex-1 items-center rounded-lg bg-gray-100 py-2"
+          className="flex-1 items-center rounded-lg bg-surface py-2"
         >
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('budget.quickAssign.zeroOut')}
           </Text>
         </Pressable>
         {targetCents !== null && (
           <Pressable
             onPress={() => setDigits(String(Math.max(0, targetCents)))}
-            className="flex-1 items-center rounded-lg bg-gray-100 py-2"
+            className="flex-1 items-center rounded-lg bg-surface py-2"
           >
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('budget.quickAssign.fillTarget')}
             </Text>
           </Pressable>
@@ -99,7 +99,7 @@ function QuickAssignModalContent({
 
       <Pressable
         onPress={() => onSave(cents)}
-        className="mt-4 items-center rounded-lg bg-blue-600 py-3"
+        className="mt-4 items-center rounded-lg bg-accent py-3"
       >
         <Text className="text-base font-semibold text-white">{t('accountForm.save')}</Text>
       </Pressable>

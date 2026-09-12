@@ -33,31 +33,31 @@ export function CategoryRow({
       <View className="flex-row items-center justify-between">
         <View className="flex-1 flex-row items-center gap-2">
           {category.icon && <Text className="text-lg">{category.icon}</Text>}
-          <Text className="flex-1 text-base text-gray-900" numberOfLines={1}>
+          <Text className="flex-1 text-base text-gray-900 dark:text-gray-100" numberOfLines={1}>
             {category.name}
           </Text>
         </View>
-        <Text className="w-20 text-right text-sm text-gray-500">
+        <Text className="w-20 text-right text-sm text-gray-500 dark:text-gray-300">
           {formatCents(numbers.assigned, 'BRL', i18n.language)}
         </Text>
         <Text
-          className={`w-24 text-right text-base font-medium ${isOverspent ? 'text-red-600' : 'text-gray-900'}`}
+          className={`w-24 text-right text-base font-medium ${isOverspent ? 'text-error' : 'text-gray-900 dark:text-gray-100'}`}
         >
           {formatCents(numbers.available, 'BRL', i18n.language)}
         </Text>
       </View>
 
-      <View className="mt-2 h-1.5 overflow-hidden rounded-full bg-gray-100">
+      <View className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface">
         <View
-          className={`h-1.5 rounded-full ${isOverspent ? 'bg-red-500' : 'bg-blue-500'}`}
+          className={`h-1.5 rounded-full ${isOverspent ? 'bg-error' : 'bg-accent'}`}
           style={{ width: `${Math.round(progress * 100)}%` }}
         />
       </View>
 
       {isOverspent && (
         <Pressable onPress={onCoverPress} className="mt-1.5 flex-row items-center gap-1">
-          <Text className="text-xs text-red-600">{t('budget.overspentAlert')}</Text>
-          <Text className="text-xs font-semibold text-red-600 underline">
+          <Text className="text-xs text-error">{t('budget.overspentAlert')}</Text>
+          <Text className="text-xs font-semibold text-error underline">
             {t('budget.coverShortcut')}
           </Text>
         </Pressable>

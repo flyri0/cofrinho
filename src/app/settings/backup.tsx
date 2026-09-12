@@ -83,24 +83,26 @@ export default function BackupSettingsScreen() {
   }
 
   if (!isInitialized) {
-    return <View className="flex-1 bg-white" />;
+    return <View className="flex-1 bg-background" />;
   }
 
   return (
-    <ScrollView className="flex-1 bg-white" contentContainerClassName="gap-1 py-2">
-      <View className="gap-1 border-b border-gray-200 px-4 py-4">
-        <Text className="text-sm font-medium text-gray-500">{t('backup.connectionStatus')}</Text>
+    <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-1 py-2">
+      <View className="gap-1 border-b border-gray-200 dark:border-gray-800 px-4 py-4">
+        <Text className="text-sm font-medium text-gray-500 dark:text-gray-300">
+          {t('backup.connectionStatus')}
+        </Text>
         {!clientIdConfigured ? (
-          <Text className="text-base text-red-600">{t('backup.notConfigured')}</Text>
+          <Text className="text-base text-error">{t('backup.notConfigured')}</Text>
         ) : isConnected ? (
-          <Text className="text-base text-gray-900">
+          <Text className="text-base text-gray-900 dark:text-gray-100">
             {t('backup.connectedAs', { email: connectedEmail ?? '' })}
           </Text>
         ) : (
           <Pressable
             onPress={() => promptAsync()}
             disabled={isSigningIn}
-            className="mt-1 items-center rounded-lg bg-blue-600 py-3"
+            className="mt-1 items-center rounded-lg bg-accent py-3"
           >
             {isSigningIn ? (
               <ActivityIndicator color="white" />
@@ -113,16 +115,18 @@ export default function BackupSettingsScreen() {
         )}
       </View>
 
-      <View className="flex-row items-center justify-between border-b border-gray-200 px-4 py-4">
-        <Text className="text-base text-gray-900">{t('backup.autoBackupToggle')}</Text>
+      <View className="flex-row items-center justify-between border-b border-gray-200 dark:border-gray-800 px-4 py-4">
+        <Text className="text-base text-gray-900 dark:text-gray-100">
+          {t('backup.autoBackupToggle')}
+        </Text>
         <Switch value={autoBackupEnabled} onValueChange={setAutoBackupEnabled} />
       </View>
 
-      <View className="border-b border-gray-200 px-4 py-4">
+      <View className="border-b border-gray-200 dark:border-gray-800 px-4 py-4">
         <Pressable
           onPress={handleBackUpNow}
           disabled={isBackingUp || !clientIdConfigured}
-          className="items-center rounded-lg bg-blue-600 py-3"
+          className="items-center rounded-lg bg-accent py-3"
         >
           {isBackingUp ? (
             <ActivityIndicator color="white" />
@@ -132,7 +136,7 @@ export default function BackupSettingsScreen() {
             </Text>
           )}
         </Pressable>
-        <Text className="mt-2 text-sm text-gray-500">
+        <Text className="mt-2 text-sm text-gray-500 dark:text-gray-300">
           {t('backup.lastBackup')}:{' '}
           {lastBackupAt ? formatDateTime(lastBackupAt, i18n.language) : t('backup.never')}
         </Text>
@@ -140,14 +144,16 @@ export default function BackupSettingsScreen() {
 
       <Pressable
         onPress={() => router.push('/settings/backup-history')}
-        className="border-b border-gray-200 px-4 py-4"
+        className="border-b border-gray-200 dark:border-gray-800 px-4 py-4"
       >
-        <Text className="text-base text-gray-900">{t('backup.history.title')}</Text>
+        <Text className="text-base text-gray-900 dark:text-gray-100">
+          {t('backup.history.title')}
+        </Text>
       </Pressable>
 
       {isConnected && (
         <Pressable onPress={confirmDisconnect} className="px-4 py-4">
-          <Text className="text-base font-medium text-red-600">{t('backup.disconnectButton')}</Text>
+          <Text className="text-base font-medium text-error">{t('backup.disconnectButton')}</Text>
         </Pressable>
       )}
     </ScrollView>

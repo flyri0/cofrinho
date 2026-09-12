@@ -32,17 +32,17 @@ export function PayeeInput({ value, onChangeValue }: PayeeInputProps) {
         value={value}
         onChangeText={handleChangeText}
         placeholder={t('transactionForm.payeePlaceholder')}
-        className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+        className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
       />
       {suggestions.length > 0 && (
-        <View className="mt-1 overflow-hidden rounded-lg border border-gray-200">
+        <View className="mt-1 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
           {suggestions.map((suggestion, index) => (
             <Pressable
               key={suggestion}
               onPress={() => selectSuggestion(suggestion)}
-              className={`px-3 py-2 ${index > 0 ? 'border-t border-gray-100' : ''}`}
+              className={`px-3 py-2 ${index > 0 ? 'border-t border-gray-100 dark:border-gray-800' : ''}`}
             >
-              <Text className="text-sm text-gray-700">{suggestion}</Text>
+              <Text className="text-sm text-gray-700 dark:text-gray-300">{suggestion}</Text>
             </Pressable>
           ))}
         </View>

@@ -20,10 +20,14 @@ export default function HomeScreen() {
   const isNegative = readyToAssign < 0;
 
   return (
-    <View className="flex-1 bg-white p-4">
-      <View className="items-center gap-1 rounded-2xl bg-gray-50 p-6">
-        <Text className="text-sm font-medium text-gray-500">{t('home.readyToAssign.label')}</Text>
-        <Text className={`text-4xl font-bold ${isNegative ? 'text-red-600' : 'text-gray-900'}`}>
+    <View className="flex-1 bg-background p-4">
+      <View className="items-center gap-1 rounded-2xl bg-surface p-6">
+        <Text className="text-sm font-medium text-gray-500 dark:text-gray-300">
+          {t('home.readyToAssign.label')}
+        </Text>
+        <Text
+          className={`text-4xl font-bold ${isNegative ? 'text-error' : 'text-gray-900 dark:text-gray-100'}`}
+        >
           {formatCents(readyToAssign, 'BRL', i18n.language)}
         </Text>
       </View>

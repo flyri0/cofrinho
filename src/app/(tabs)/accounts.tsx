@@ -23,11 +23,11 @@ export default function AccountsScreen() {
   const groups = groupAccountsByKind(accounts);
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="border-b border-gray-200 px-4 py-3">
+    <View className="flex-1 bg-background">
+      <View className="border-b border-gray-200 dark:border-gray-800 px-4 py-3">
         <Pressable
           onPress={() => router.push('/account/new')}
-          className="items-center rounded-lg bg-blue-600 py-2.5"
+          className="items-center rounded-lg bg-accent py-2.5"
         >
           <Text className="text-base font-semibold text-white">{t('accounts.addAccount')}</Text>
         </Pressable>
@@ -35,10 +35,10 @@ export default function AccountsScreen() {
 
       {groups.length === 0 ? (
         <View className="flex-1 items-center justify-center gap-2 p-6">
-          <Text className="text-lg font-semibold text-gray-900">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             {t('accounts.emptyState.title')}
           </Text>
-          <Text className="text-center text-base text-gray-500">
+          <Text className="text-center text-base text-gray-500 dark:text-gray-300">
             {t('accounts.emptyState.message')}
           </Text>
         </View>
@@ -48,11 +48,11 @@ export default function AccountsScreen() {
           keyExtractor={(group) => group.kind}
           renderItem={({ item: group }) => (
             <View>
-              <View className="flex-row items-center justify-between bg-gray-50 px-4 py-2">
-                <Text className="text-sm font-semibold text-gray-600">
+              <View className="flex-row items-center justify-between bg-surface px-4 py-2">
+                <Text className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                   {t(`accountGroups.${group.kind}.title`)}
                 </Text>
-                <Text className="text-sm font-semibold text-gray-600">
+                <Text className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                   {t('accounts.subtotal')}: {formatCents(group.subtotal, 'BRL', i18n.language)}
                 </Text>
               </View>
@@ -72,7 +72,7 @@ export default function AccountsScreen() {
               ))}
             </View>
           )}
-          ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+          ItemSeparatorComponent={() => <View className="h-px bg-surface" />}
         />
       )}
     </View>

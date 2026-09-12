@@ -65,18 +65,22 @@ export function TransactionListItem({
         {transaction.isTransfer ? '↔' : (category?.icon ?? '❓')}
       </Text>
       <View className="flex-1">
-        <Text className="text-base text-gray-900">
+        <Text className="text-base text-gray-900 dark:text-gray-100">
           {transaction.payee ||
             (transaction.isTransfer ? t('transactions.transferLabel') : category?.name)}
         </Text>
-        <Text className="text-xs text-gray-500">
+        <Text className="text-xs text-gray-500 dark:text-gray-300">
           {transaction.date}
           {!transaction.cleared ? ` · ${t('transactions.options.markCleared')}` : ''}
         </Text>
       </View>
       <Text
         className={`text-base font-medium ${
-          transaction.isTransfer ? 'text-gray-500' : isOutflow ? 'text-gray-900' : 'text-green-600'
+          transaction.isTransfer
+            ? 'text-gray-500 dark:text-gray-300'
+            : isOutflow
+              ? 'text-gray-900 dark:text-gray-100'
+              : 'text-success'
         }`}
       >
         {formatCents(transaction.amount, currency, i18n.language)}

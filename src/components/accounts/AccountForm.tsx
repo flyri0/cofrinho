@@ -74,37 +74,49 @@ export function AccountForm({ mode, currentBalanceCents, onSubmit, onSuccess }: 
   }
 
   return (
-    <ScrollView className="flex-1 bg-white" contentContainerClassName="gap-5 p-4">
+    <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-5 p-4">
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">{t('accountForm.nameLabel')}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {t('accountForm.nameLabel')}
+        </Text>
         <TextInput
           value={draft.name}
           onChangeText={(text) => draft.setField('name', text)}
           placeholder={t('accountForm.namePlaceholder')}
-          className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+          className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
         />
         {errors.name && (
-          <Text className="text-sm text-red-600">{t('accountForm.errors.nameRequired')}</Text>
+          <Text className="text-sm text-error">{t('accountForm.errors.nameRequired')}</Text>
         )}
       </View>
 
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">{t('accountForm.typeLabel')}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {t('accountForm.typeLabel')}
+        </Text>
         <Pressable
           onPress={() => router.push('/account/type-picker')}
-          className="rounded-lg border border-gray-300 px-3 py-2.5"
+          className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5"
         >
-          <Text className={draft.type ? 'text-base text-gray-900' : 'text-base text-gray-400'}>
+          <Text
+            className={
+              draft.type
+                ? 'text-base text-gray-900 dark:text-gray-100'
+                : 'text-base text-gray-400 dark:text-gray-300'
+            }
+          >
             {draft.type ? t(`accountTypes.${draft.type}`) : t('accountForm.selectType')}
           </Text>
         </Pressable>
         {typeRequiredError && (
-          <Text className="text-sm text-red-600">{t('accountForm.errors.typeRequired')}</Text>
+          <Text className="text-sm text-error">{t('accountForm.errors.typeRequired')}</Text>
         )}
       </View>
 
       <View className="gap-1.5">
-        <Text className="text-sm font-medium text-gray-700">{t('accountForm.balanceLabel')}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {t('accountForm.balanceLabel')}
+        </Text>
         {mode === 'create' ? (
           <MoneyInput
             value={draft.balanceCents}
@@ -117,7 +129,9 @@ export function AccountForm({ mode, currentBalanceCents, onSubmit, onSuccess }: 
               onChangeValue={() => {}}
               editable={false}
             />
-            <Text className="text-xs text-gray-500">{t('accountForm.balanceReadOnlyHint')}</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-300">
+              {t('accountForm.balanceReadOnlyHint')}
+            </Text>
           </>
         )}
       </View>
@@ -125,24 +139,24 @@ export function AccountForm({ mode, currentBalanceCents, onSubmit, onSuccess }: 
       {showLoanFields && (
         <>
           <View className="gap-1.5">
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('accountForm.interestRateLabel')}
             </Text>
             <TextInput
               value={draft.interestRateAnnualInput}
               onChangeText={(text) => draft.setField('interestRateAnnualInput', text)}
               keyboardType="decimal-pad"
-              className="rounded-lg border border-gray-300 px-3 py-2.5 text-base text-gray-900"
+              className="rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-base text-gray-900 dark:text-gray-100"
             />
             {errors.interestRateAnnual && (
-              <Text className="text-sm text-red-600">
+              <Text className="text-sm text-error">
                 {t(interestRateErrorKey(errors.interestRateAnnual))}
               </Text>
             )}
           </View>
 
           <View className="gap-1.5">
-            <Text className="text-sm font-medium text-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('accountForm.monthlyPaymentLabel')}
             </Text>
             <MoneyInput
@@ -151,7 +165,7 @@ export function AccountForm({ mode, currentBalanceCents, onSubmit, onSuccess }: 
               allowNegative={false}
             />
             {errors.monthlyPayment && (
-              <Text className="text-sm text-red-600">
+              <Text className="text-sm text-error">
                 {t('accountForm.errors.monthlyPaymentMustBePositive')}
               </Text>
             )}
@@ -162,7 +176,7 @@ export function AccountForm({ mode, currentBalanceCents, onSubmit, onSuccess }: 
       <Pressable
         onPress={handleSave}
         disabled={isSubmitting}
-        className="items-center rounded-lg bg-blue-600 py-3"
+        className="items-center rounded-lg bg-accent py-3"
       >
         {isSubmitting ? (
           <ActivityIndicator color="white" />
